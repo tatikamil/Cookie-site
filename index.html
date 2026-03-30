@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наш смак — Печиво</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Overlay -->
+  <div class="overlay">
+    <span>Безкоштовна доставка від 1000 грн 🍩🍪</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__logo">
+      <a href="#"><img src="images/logo.svg" alt="Наш смак"></a>
+    </div>
+    <nav class="header__categories">
+      <button class="header__cat-tab header__cat-tab--active">Печиво</button>
+      <button class="header__cat-tab">Мафіни & Донати</button>
+      <button class="header__cat-tab">Набори</button>
+      <button class="header__cat-tab">Створи свій бокс</button>
+    </nav>
+    <div class="header__right">
+      <div class="header__nav">
+        <a href="#" class="header__nav-link">Про нас
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#2F7D45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="header__nav-link">B2B</a>
+      </div>
+      <div class="header__icons">
+        <button class="header__icon-btn" aria-label="Пошук">
+          <img src="icons/search.svg" width="24" height="24" alt="">
+        </button>
+        <button class="header__icon-btn" aria-label="Акаунт">
+          <img src="icons/account.svg" width="24" height="24" alt="">
+        </button>
+        <button class="header__icon-btn header__cart-btn" aria-label="Кошик">
+          <img src="icons/cart.svg" width="24" height="24" alt="">
+          <span class="header__cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Subcategory pills -->
+    <div class="subcategories">
+      <button class="pill pill--active" data-filter="all">Все печиво</button>
+      <button class="pill" data-filter="sandwich">печиво-сендвіч</button>
+      <button class="pill" data-filter="classic">класичне</button>
+    </div>
+
+    <!-- Product grid -->
+    <div class="product-grid" id="productGrid"></div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

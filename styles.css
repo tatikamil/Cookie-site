@@ -1,0 +1,342 @@
+/* === Design Tokens from Figma === */
+:root {
+  --green-500: #2F7D45;
+  --green-300: #159642;
+  --green-250: #00A439;
+  --green-100: #BEE5C1;
+  --brown-500: #3A332C;
+  --beige-100: #FFFCF6;
+  --beige-250: #FEFAEF;
+  --orange: #FF5E00;
+  --brown-300: #EBD9C2;
+  --brown-400: #D3C2AB;
+
+  --font-heading: 'Nunito', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* === Reset === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--beige-100);
+  color: var(--brown-500);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+/* === Overlay === */
+.overlay {
+  background: var(--green-300);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--beige-250);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* === Header === */
+.header {
+  border: 1px solid var(--green-250);
+  display: flex;
+  align-items: stretch;
+  height: 80px;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 64px;
+}
+
+.header__logo a {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--green-300);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+/* Category tabs inside header */
+.header__categories {
+  display: flex;
+  align-items: stretch;
+  border-left: 1px solid var(--green-250);
+  border-right: 1px solid var(--green-250);
+}
+
+.header__cat-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 48px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--green-500);
+  white-space: nowrap;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.header__cat-tab:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.header__cat-tab--active {
+  background: var(--green-300);
+  border: 1px solid var(--green-250);
+  color: var(--beige-250);
+}
+
+.header__cat-tab--active:hover {
+  border-color: var(--green-250);
+  color: var(--beige-250);
+}
+
+/* Right section of header */
+.header__right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 64px;
+}
+
+.header__nav-link {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--green-500);
+  text-transform: uppercase;
+  letter-spacing: -0.16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 64px;
+}
+
+.header__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__cart-btn {
+  position: relative;
+}
+
+.header__cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: var(--orange);
+  color: var(--beige-250);
+  font-size: 10px;
+  font-weight: 400;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Main === */
+.main {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 64px 80px;
+}
+
+/* === Subcategory Pills === */
+.subcategories {
+  display: flex;
+  gap: 24px;
+  padding-top: 80px;
+}
+
+.pill {
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  border: 1px solid var(--green-250);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: -0.16px;
+  color: var(--green-500);
+  background: transparent;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.pill:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.pill--active {
+  background: var(--green-300);
+  border-color: var(--green-250);
+  color: var(--beige-250);
+}
+
+.pill--active:hover {
+  border-color: var(--green-250);
+  color: var(--beige-250);
+}
+
+/* === Product Grid === */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  row-gap: 240px;
+  padding-top: 240px;
+}
+
+/* === Product Card === */
+.product-card {
+  background: var(--beige-250);
+  border: 1px solid var(--green-250);
+  border-radius: 24px;
+  padding: 24px;
+  height: 376px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  overflow: visible;
+}
+
+.product-card__image-wrap {
+  width: 100%;
+  aspect-ratio: 382 / 320;
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.product-card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-card__name {
+  width: 100%;
+  padding-top: 16px;
+}
+
+.product-card__name a {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: var(--green-500);
+}
+
+.product-card__options {
+  width: 100%;
+  padding: 24px 0;
+}
+
+.product-card__dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--beige-100);
+  border: 1px solid var(--green-100);
+  border-radius: 16px;
+  height: 48px;
+  padding-left: 16px;
+}
+
+.product-card__weight {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--brown-500);
+}
+
+.product-card__price-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 8px;
+}
+
+.product-card__price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--brown-500);
+  white-space: nowrap;
+}
+
+.product-card__caret {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.product-card__btn {
+  width: 100%;
+  min-height: 56px;
+  background: var(--beige-250);
+  border: 1px solid var(--green-250);
+  border-radius: 16px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--green-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.product-card__btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.product-card__btn:active {
+  background: var(--green-300);
+  border-color: var(--green-250);
+  color: var(--beige-250);
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наш смак — Створи свій бокс</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="box-builder.css">
+</head>
+<body>
+
+  <!-- Overlay -->
+  <div class="overlay">
+    <span>Безкоштовна доставка від 1000 грн 🍩🍪</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header header--box">
+    <div class="header__logo">
+      <a href="index.html"><img src="images/logo.svg" alt="Наш смак"></a>
+    </div>
+    <nav class="header__categories">
+      <a href="index.html" class="header__cat-tab">Печиво</a>
+      <button class="header__cat-tab">Мафіни & Донати</button>
+      <button class="header__cat-tab">Набори</button>
+      <button class="header__cat-tab header__cat-tab--underline">Створи свій бокс</button>
+    </nav>
+    <div class="header__right">
+      <div class="header__nav">
+        <a href="#" class="header__nav-link">Про нас
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="header__nav-link">B2B</a>
+      </div>
+      <div class="header__icons">
+        <button class="header__icon-btn" aria-label="Пошук">
+          <img src="icons/search.svg" width="24" height="24" alt="">
+        </button>
+        <button class="header__icon-btn" aria-label="Акаунт">
+          <img src="icons/account.svg" width="24" height="24" alt="">
+        </button>
+        <button class="header__icon-btn header__cart-btn" aria-label="Кошик">
+          <img src="icons/cart.svg" width="24" height="24" alt="">
+          <span class="header__cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Subcategory pills -->
+    <div class="subcategories">
+      <button class="pill pill--active" data-filter="sandwich">печиво-сендвіч</button>
+      <button class="pill" data-filter="classic">печиво класичне</button>
+      <button class="pill" data-filter="muffins">мафіни & донати</button>
+    </div>
+
+    <!-- Content: grid + sidebar -->
+    <div class="box-layout">
+      <div class="product-grid product-grid--3col" id="productGrid"></div>
+      <aside class="box-sidebar" id="boxSidebar">
+        <h2 class="box-sidebar__title">Ваш бокс</h2>
+
+        <div class="box-sidebar__stats">
+          <div class="box-sidebar__stat-row">
+            <span class="box-sidebar__stat-label">Різних продуктів:</span>
+            <span class="box-sidebar__stat-value" id="statProducts">0 / 10</span>
+          </div>
+          <div class="box-sidebar__stat-row">
+            <span class="box-sidebar__stat-label">Всього штук:</span>
+            <span class="box-sidebar__stat-value" id="statPieces">0 / 36</span>
+          </div>
+        </div>
+
+        <div class="box-sidebar__items" id="boxItems">
+          <div class="box-sidebar__empty">Додайте печиво до боксу</div>
+        </div>
+
+        <div class="box-sidebar__postcard">
+          <div class="box-sidebar__postcard-header">
+            <span class="box-sidebar__postcard-title">Текст листівки:</span>
+          </div>
+          <textarea class="box-sidebar__postcard-text" placeholder="Напишіть побажання..." rows="3"></textarea>
+        </div>
+
+        <div class="box-sidebar__total">
+          <span class="box-sidebar__total-label">Сума:</span>
+          <span class="box-sidebar__total-value" id="totalPrice">0 грн</span>
+        </div>
+
+        <button class="box-sidebar__checkout">Покласти у кошик</button>
+      </aside>
+    </div>
+  </main>
+
+  <script src="box-builder.js"></script>
+</body>
+</html>
