@@ -47,7 +47,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
 /* === Header === */
 .header {
-  border: 1px solid var(--green-250);
+  border: 1px solid var(--brown-300);
   display: flex;
   align-items: stretch;
   height: 80px;
@@ -73,39 +73,38 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .header__categories {
   display: flex;
   align-items: stretch;
-  border-left: 1px solid var(--green-250);
-  border-right: 1px solid var(--green-250);
+  border-left: 1px solid var(--brown-300);
+  border-right: 1px solid var(--brown-300);
 }
 
 .header__cat-tab {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 48px;
+  padding: 16px 40px;
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
-  color: var(--green-500);
+  color: var(--brown-500);
   white-space: nowrap;
   height: 100%;
-  border: 1px solid transparent;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  border: none;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .header__cat-tab:hover {
-  border-color: var(--orange);
   color: var(--orange);
 }
 
 .header__cat-tab--active {
-  background: var(--green-300);
-  border: 1px solid var(--green-250);
-  color: var(--beige-250);
+  color: var(--green-500);
+  border-bottom-color: var(--green-250);
 }
 
 .header__cat-tab--active:hover {
-  border-color: var(--green-250);
-  color: var(--beige-250);
+  color: var(--green-500);
+  border-bottom-color: var(--green-250);
 }
 
 /* Right section of header */
@@ -120,16 +119,14 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   display: flex;
   align-items: center;
   gap: 40px;
-  padding: 0 64px;
+  padding: 0 40px;
 }
 
 .header__nav-link {
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
-  color: var(--green-500);
-  text-transform: uppercase;
-  letter-spacing: -0.16px;
+  color: var(--brown-500);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -219,20 +216,21 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  row-gap: 240px;
-  padding-top: 240px;
+  row-gap: 160px;
+  padding-top: 160px;
 }
 
 /* === Product Card === */
 .product-card {
+  --card-pad: 24px;
   background: var(--beige-250);
   border: 1px solid var(--green-250);
   border-radius: 24px;
-  padding: 24px;
+  padding: 0;
   height: 376px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-end;
   position: relative;
   overflow: visible;
@@ -240,7 +238,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
 .product-card__image-wrap {
   width: 100%;
-  aspect-ratio: 382 / 320;
+  aspect-ratio: 430 / 320;
   position: relative;
   overflow: visible;
   flex-shrink: 0;
@@ -257,7 +255,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
 .product-card__name {
   width: 100%;
-  padding-top: 16px;
+  padding: 16px var(--card-pad) 0;
 }
 
 .product-card__name a {
@@ -270,7 +268,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
 .product-card__options {
   width: 100%;
-  padding: 24px 0;
+  padding: 16px var(--card-pad) 16px;
 }
 
 .product-card__dropdown {
@@ -314,8 +312,10 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 }
 
 .product-card__btn {
-  width: 100%;
-  min-height: 56px;
+  width: auto;
+  margin: 0 var(--card-pad) var(--card-pad);
+  min-height: 48px;
+  height: 48px;
   background: var(--beige-250);
   border: 1px solid var(--green-250);
   border-radius: 16px;
@@ -339,4 +339,342 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   background: var(--green-300);
   border-color: var(--green-250);
   color: var(--beige-250);
+}
+
+/* =============================================
+   Responsive — Burger & Mobile Menu (base)
+   ============================================= */
+
+.header__burger-btn {
+  display: none;
+}
+
+/* Mobile menu overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(58, 51, 44, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: var(--beige-100);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-overlay.is-open .mobile-menu {
+  transform: translateX(0);
+}
+
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px;
+  border-bottom: 1px solid var(--brown-300);
+}
+
+.mobile-menu__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--green-500);
+}
+
+.mobile-menu__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--brown-500);
+  border-bottom: 1px solid var(--brown-300);
+}
+
+.mobile-menu__link--highlight {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--green-500);
+  border-bottom: none;
+}
+
+/* =============================================
+   Responsive — Tablet (768px – 1023px)
+   ============================================= */
+
+@media (max-width: 1023px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .header__logo {
+    padding: 10px 16px;
+  }
+
+  .header__categories {
+    order: 3;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--brown-300);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header__cat-tab {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__icons .header__icon-btn[aria-label="Пошук"],
+  .header__icons .header__icon-btn[aria-label="Акаунт"] {
+    display: none;
+  }
+
+  .header__burger-btn {
+    display: flex;
+  }
+
+  .header__icons {
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  .header__right {
+    justify-content: flex-end;
+  }
+
+  .overlay {
+    font-size: 14px;
+    height: 40px;
+  }
+
+  .main {
+    padding: 0 24px 40px;
+  }
+
+  .subcategories {
+    padding-top: 40px;
+    gap: 12px;
+  }
+
+  .pill {
+    height: 32px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    row-gap: 180px;
+    padding-top: 180px;
+  }
+
+  .product-card {
+    --card-pad: 16px;
+    height: 320px;
+    border-radius: 20px;
+  }
+
+  .product-card__name a {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .product-card__price {
+    font-size: 20px;
+  }
+
+  .product-card__btn {
+    min-height: 48px;
+    font-size: 20px;
+    border-radius: 12px;
+  }
+
+  .product-card__dropdown {
+    height: 40px;
+    border-radius: 12px;
+  }
+}
+
+/* =============================================
+   Responsive — Mobile (до 767px)
+   ============================================= */
+
+@media (max-width: 767px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .header__logo {
+    padding: 10px 16px;
+    flex: 1;
+  }
+
+  .header__logo a img {
+    height: 24px;
+    width: auto;
+  }
+
+  .header__categories {
+    order: 3;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--brown-300);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header__cat-tab {
+    font-size: 16px;
+    padding: 8px 16px;
+    flex-shrink: 0;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__icons .header__icon-btn[aria-label="Пошук"],
+  .header__icons .header__icon-btn[aria-label="Акаунт"] {
+    display: none;
+  }
+
+  .header__burger-btn {
+    display: flex;
+  }
+
+  .header__icons {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .header__right {
+    justify-content: flex-end;
+  }
+
+  .overlay {
+    font-size: 12px;
+    height: 36px;
+  }
+
+  .main {
+    padding: 0 16px 32px;
+  }
+
+  .subcategories {
+    padding-top: 24px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    height: 24px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 16px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    row-gap: 140px;
+    padding-top: 140px;
+  }
+
+  .product-card {
+    --card-pad: 12px;
+    height: 280px;
+    border-radius: 16px;
+  }
+
+  .product-card__name a {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .product-card__options {
+    padding: 12px 0;
+  }
+
+  .product-card__price {
+    font-size: 18px;
+  }
+
+  .product-card__weight {
+    font-size: 14px;
+  }
+
+  .product-card__btn {
+    min-height: 44px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  .product-card__dropdown {
+    height: 36px;
+    border-radius: 12px;
+    padding-left: 8px;
+  }
+
+  .product-card__price-group {
+    gap: 8px;
+    padding: 0 4px;
+  }
+
+  .product-card__caret {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mobile-menu {
+    width: 100%;
+  }
 }

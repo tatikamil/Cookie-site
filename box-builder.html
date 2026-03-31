@@ -17,7 +17,7 @@
   </div>
 
   <!-- Header -->
-  <header class="header header--box">
+  <header class="header">
     <div class="header__logo">
       <a href="index.html"><img src="images/logo.svg" alt="Наш смак"></a>
     </div>
@@ -25,7 +25,7 @@
       <a href="index.html" class="header__cat-tab">Печиво</a>
       <button class="header__cat-tab">Мафіни & Донати</button>
       <button class="header__cat-tab">Набори</button>
-      <button class="header__cat-tab header__cat-tab--underline">Створи свій бокс</button>
+      <button class="header__cat-tab header__cat-tab--active">Створи свій бокс</button>
     </nav>
     <div class="header__right">
       <div class="header__nav">
@@ -45,56 +45,100 @@
           <img src="icons/cart.svg" width="24" height="24" alt="">
           <span class="header__cart-badge">0</span>
         </button>
+        <button class="header__icon-btn header__burger-btn" aria-label="Меню">
+          <img src="icons/menu.svg" width="24" height="24" alt="">
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__title">Меню</span>
+        <button class="mobile-menu__close" id="mobileMenuClose" aria-label="Закрити">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <line x1="6" y1="6" x2="18" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="6" x2="6" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-menu__nav">
+        <a href="#" class="mobile-menu__link">
+          <img src="icons/search.svg" width="20" height="20" alt=""> Пошук
+        </a>
+        <a href="#" class="mobile-menu__link">
+          <img src="icons/account.svg" width="20" height="20" alt=""> Акаунт
+        </a>
+        <a href="#" class="mobile-menu__link">Про нас</a>
+        <a href="#" class="mobile-menu__link">B2B</a>
+        <a href="index.html" class="mobile-menu__link mobile-menu__link--highlight">Печиво</a>
+      </nav>
+    </div>
+  </div>
 
   <main class="main">
     <!-- Subcategory pills -->
     <div class="subcategories">
       <button class="pill pill--active" data-filter="sandwich">печиво-сендвіч</button>
       <button class="pill" data-filter="classic">печиво класичне</button>
-      <button class="pill" data-filter="muffins">мафіни & донати</button>
+      <button class="pill" data-filter="donuts">донати</button>
+      <button class="pill" data-filter="muffins">мафіни</button>
     </div>
 
     <!-- Content: grid + sidebar -->
     <div class="box-layout">
       <div class="product-grid product-grid--3col" id="productGrid"></div>
       <aside class="box-sidebar" id="boxSidebar">
-        <h2 class="box-sidebar__title">Ваш бокс</h2>
-
-        <div class="box-sidebar__stats">
-          <div class="box-sidebar__stat-row">
-            <span class="box-sidebar__stat-label">Різних продуктів:</span>
-            <span class="box-sidebar__stat-value" id="statProducts">0 / 10</span>
-          </div>
-          <div class="box-sidebar__stat-row">
-            <span class="box-sidebar__stat-label">Всього штук:</span>
-            <span class="box-sidebar__stat-value" id="statPieces">0 / 36</span>
-          </div>
-        </div>
-
-        <div class="box-sidebar__items" id="boxItems">
-          <div class="box-sidebar__empty">Додайте печиво до боксу</div>
-        </div>
-
-        <div class="box-sidebar__postcard">
-          <div class="box-sidebar__postcard-header">
-            <span class="box-sidebar__postcard-title">Текст листівки:</span>
-          </div>
-          <textarea class="box-sidebar__postcard-text" placeholder="Напишіть побажання..." rows="3"></textarea>
-        </div>
-
-        <div class="box-sidebar__total">
-          <span class="box-sidebar__total-label">Сума:</span>
-          <span class="box-sidebar__total-value" id="totalPrice">0 грн</span>
-        </div>
-
-        <button class="box-sidebar__checkout">Покласти у кошик</button>
+        <!-- Rendered dynamically by JS -->
       </aside>
     </div>
   </main>
 
+  <!-- Mobile bottom bar -->
+  <div class="box-bottom-bar" id="boxBottomBar">
+    <div class="box-bottom-bar__info">
+      <span class="box-bottom-bar__label">Ваш бокс</span>
+      <span class="box-bottom-bar__summary" id="bottomBarSummary">0 шт · 0 грн</span>
+    </div>
+    <div class="box-mini-map" id="boxMiniMap">
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+      <div class="box-mini-map__seg"></div>
+    </div>
+    <button class="box-bottom-bar__btn" id="bottomBarToggle">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M5 12.5L10 7.5L15 12.5" stroke="#FEFAEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="box-drawer-overlay" id="boxDrawerOverlay">
+    <div class="box-drawer" id="boxDrawer">
+      <div class="box-drawer__header">
+        <span class="box-drawer__title">Ваш бокс</span>
+        <button class="box-drawer__close" id="boxDrawerClose" aria-label="Закрити">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <line x1="6" y1="6" x2="18" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="6" x2="6" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="box-drawer__content" id="boxDrawerContent">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </div>
+  </div>
+
   <script src="box-builder.js"></script>
+  <script src="responsive.js"></script>
 </body>
 </html>
