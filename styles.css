@@ -13,6 +13,7 @@
 
   --font-heading: 'Nunito', sans-serif;
   --font-body: 'DM Sans', sans-serif;
+  --font-condensed: 'Roboto Condensed', sans-serif;
 }
 
 /* === Reset === */
@@ -176,8 +177,8 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 /* === Subcategory Pills === */
 .subcategories {
   display: flex;
-  gap: 24px;
-  padding-top: 80px;
+  gap: 16px;
+  padding-top: 64px;
 }
 
 .pill {
@@ -214,20 +215,22 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 /* === Product Grid === */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  row-gap: 160px;
-  padding-top: 160px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(8px, 1.3vw, 24px);
+  row-gap: clamp(8px, 1.3vw, 24px);
+  padding-top: 0;
 }
 
 /* === Product Card === */
 .product-card {
   --card-pad: 24px;
+  grid-column: span 3;
   background: var(--beige-250);
-  border: 1px solid var(--green-250);
+  border: 1px solid var(--brown-300);
   border-radius: 24px;
   padding: 0;
   height: 376px;
+  margin-top: 42%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -341,6 +344,69 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   color: var(--beige-250);
 }
 
+/* === Promo Card (Build Your Box) === */
+.promo-card {
+  grid-column: span 3;
+  background: var(--green-300);
+  border: 1px solid var(--brown-300);
+  border-radius: 24px;
+  padding: 24px;
+  height: 376px;
+  margin-top: 42%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.promo-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.promo-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 36px;
+  color: var(--beige-250);
+}
+
+.promo-card__desc {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--beige-250);
+}
+
+.promo-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background: var(--beige-250);
+  border: 1px solid var(--green-250);
+  border-radius: 16px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--green-500);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.promo-card__btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.promo-card__btn-mobile {
+  display: none;
+}
+
 /* =============================================
    Responsive — Burger & Mobile Menu (base)
    ============================================= */
@@ -438,63 +504,38 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 }
 
 /* =============================================
-   Responsive — Tablet (768px – 1023px)
+   Responsive — Compact cards + header (≤1599px)
    ============================================= */
 
-@media (max-width: 1023px) {
-  .header {
-    flex-wrap: wrap;
-    height: auto;
-  }
-
+@media (max-width: 1599px) {
+  /* Header: reduced sizes, still full */
   .header__logo {
-    padding: 10px 16px;
-  }
-
-  .header__categories {
-    order: 3;
-    width: 100%;
-    border-left: none;
-    border-right: none;
-    border-top: 1px solid var(--brown-300);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 10px 32px;
   }
 
   .header__cat-tab {
-    font-size: 16px;
-    padding: 8px 16px;
+    font-size: 18px;
+    padding: 12px 20px;
   }
 
   .header__nav {
-    display: none;
-  }
-
-  .header__icons .header__icon-btn[aria-label="Пошук"],
-  .header__icons .header__icon-btn[aria-label="Акаунт"] {
-    display: none;
-  }
-
-  .header__burger-btn {
-    display: flex;
+    gap: 20px;
+    padding: 0 20px;
   }
 
   .header__icons {
-    padding: 0 16px;
+    padding: 0 32px;
     gap: 16px;
   }
 
-  .header__right {
-    justify-content: flex-end;
-  }
-
+  /* Layout */
   .overlay {
     font-size: 14px;
     height: 40px;
   }
 
   .main {
-    padding: 0 24px 40px;
+    padding: 0 32px 40px;
   }
 
   .subcategories {
@@ -508,45 +549,99 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
     font-size: 14px;
   }
 
-  .product-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    row-gap: 180px;
-    padding-top: 180px;
+  /* Card compact design */
+  .product-card {
+    --card-pad: 8px;
+    height: 260px;
+    border-radius: 8px;
   }
 
-  .product-card {
-    --card-pad: 16px;
-    height: 320px;
-    border-radius: 20px;
+  .product-card__name {
+    padding: 8px var(--card-pad) 0;
   }
 
   .product-card__name a {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  .product-card__options {
+    padding: 8px var(--card-pad) 8px;
   }
 
   .product-card__price {
-    font-size: 20px;
+    font-family: var(--font-condensed);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .product-card__weight {
+    font-family: var(--font-condensed);
+    font-size: 14px;
+    font-weight: 400;
   }
 
   .product-card__btn {
     min-height: 48px;
+    height: 48px;
     font-size: 20px;
-    border-radius: 12px;
+    font-weight: 600;
+    border-radius: 8px;
   }
 
   .product-card__dropdown {
-    height: 40px;
-    border-radius: 12px;
+    height: auto;
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
+
+  .product-card__price-group {
+    gap: 4px;
+    padding: 0;
+  }
+
+  .product-card__caret {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Promo compact */
+  .promo-card {
+    height: 260px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .promo-card__text {
+    gap: 32px;
+  }
+
+  .promo-card__title {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .promo-card__desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  .promo-card__btn {
+    height: 44px;
+    font-size: 16px;
+    border-radius: 8px;
   }
 }
 
 /* =============================================
-   Responsive — Mobile (до 767px)
+   Responsive — Header collapse + burger (≤1023px)
    ============================================= */
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
+  /* Header wraps: categories on 2nd row */
   .header {
     flex-wrap: wrap;
     height: auto;
@@ -554,12 +649,6 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
   .header__logo {
     padding: 10px 16px;
-    flex: 1;
-  }
-
-  .header__logo a img {
-    height: 24px;
-    width: auto;
   }
 
   .header__categories {
@@ -568,22 +657,22 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
     border-left: none;
     border-right: none;
     border-top: 1px solid var(--brown-300);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
   .header__cat-tab {
     font-size: 16px;
     padding: 8px 16px;
-    flex-shrink: 0;
+    flex: 1;
+    text-align: center;
   }
 
+  /* Nav + extra icons hidden → burger */
   .header__nav {
     display: none;
   }
 
-  .header__icons .header__icon-btn[aria-label="Пошук"],
-  .header__icons .header__icon-btn[aria-label="Акаунт"] {
+  .header__search-btn,
+  .header__account-btn {
     display: none;
   }
 
@@ -593,11 +682,50 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 
   .header__icons {
     padding: 0 16px;
-    gap: 12px;
+    gap: 16px;
   }
 
   .header__right {
     justify-content: flex-end;
+  }
+
+  .main {
+    padding: 0 24px 40px;
+  }
+
+  .product-card {
+    height: 220px;
+  }
+
+  .promo-card {
+    height: 220px;
+  }
+}
+
+/* =============================================
+   Responsive — Mobile (до 767px)
+   ============================================= */
+
+@media (max-width: 767px) {
+  .header__logo {
+    flex: 1;
+  }
+
+  .header__logo a img {
+    height: 24px;
+    width: auto;
+  }
+
+  .header__cat-tab {
+    flex: 1;
+  }
+
+  .header__cat-tab--box {
+    display: none;
+  }
+
+  .header__icons {
+    gap: 12px;
   }
 
   .overlay {
@@ -618,60 +746,45 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   .pill {
     height: 24px;
     padding: 4px 8px;
-    font-size: 12px;
+    font-family: var(--font-condensed);
+    font-weight: 400;
+    font-size: 14px;
     border-radius: 16px;
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    row-gap: 140px;
-    padding-top: 140px;
   }
 
   .product-card {
-    --card-pad: 12px;
-    height: 280px;
-    border-radius: 16px;
+    grid-column: span 6;
+    height: 198px;
+    margin-top: 55%;
   }
 
-  .product-card__name a {
-    font-size: 16px;
-    line-height: 20px;
+  /* Promo card mobile */
+  .promo-card {
+    grid-column: span 6;
+    height: 198px;
+    margin-top: 55%;
+    padding: 8px;
   }
 
-  .product-card__options {
-    padding: 12px 0;
+  .promo-card__title {
+    display: none;
   }
 
-  .product-card__price {
-    font-size: 18px;
+  .promo-card__text {
+    gap: 0;
   }
 
-  .product-card__weight {
-    font-size: 14px;
+  .promo-card__btn {
+    height: 56px;
+    border-color: var(--green-300);
   }
 
-  .product-card__btn {
-    min-height: 44px;
-    font-size: 18px;
-    border-radius: 12px;
+  .promo-card__btn-desktop {
+    display: none;
   }
 
-  .product-card__dropdown {
-    height: 36px;
-    border-radius: 12px;
-    padding-left: 8px;
-  }
-
-  .product-card__price-group {
-    gap: 8px;
-    padding: 0 4px;
-  }
-
-  .product-card__caret {
-    width: 24px;
-    height: 24px;
+  .promo-card__btn-mobile {
+    display: inline;
   }
 
   .mobile-menu {

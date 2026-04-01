@@ -6,16 +6,20 @@
 .box-layout {
   display: flex;
   gap: 24px;
-  padding-top: 240px;
+  padding-top: 0;
 }
 
 .product-grid--3col {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  row-gap: 160px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(8px, 1.3vw, 24px);
+  row-gap: clamp(8px, 1.3vw, 24px);
   padding-top: 0;
+}
+
+.product-grid--3col .product-card {
+  grid-column: span 4;
 }
 
 /* --- Card variant for box builder --- */
@@ -748,7 +752,6 @@
 @media (max-width: 1023px) {
   .box-layout {
     flex-direction: column;
-    padding-top: 180px;
   }
 
   .box-sidebar {
@@ -761,20 +764,6 @@
 
   .main {
     padding-bottom: 80px;
-  }
-
-  .product-grid--3col {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    row-gap: 160px;
-  }
-
-  .box-layout .product-card {
-    height: 320px;
-  }
-
-  .box-layout .product-card__name a {
-    font-size: 20px;
   }
 
   .product-card__pcs {
@@ -813,7 +802,6 @@
 @media (max-width: 767px) {
   .box-layout {
     flex-direction: column;
-    padding-top: 120px;
   }
 
   .box-sidebar {
@@ -828,18 +816,8 @@
     padding-bottom: 80px;
   }
 
-  .product-grid--3col {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    row-gap: 120px;
-  }
-
-  .box-layout .product-card {
-    height: 280px;
-  }
-
-  .box-layout .product-card__name a {
-    font-size: 16px;
+  .product-grid--3col .product-card {
+    grid-column: span 6;
   }
 
   .product-card__pcs {

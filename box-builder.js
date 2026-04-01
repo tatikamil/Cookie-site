@@ -129,7 +129,7 @@ const products = [
       { name: "великодній",    price: 17, img: "images/donut-velykodniy.png" },
       { name: "персик",        price: 17, img: "images/donut-velykodniy2.png" },
       { name: "згущенка",      price: 17, img: "images/donut-zgyshenka.png" },
-      { name: "абрикос",       price: 17, img: "images/Донат абрикос.png" },
+      { name: "абрикос",       price: 17, img: "images/donut-abrykos.png" },
       { name: "полуниця",      price: 17, img: "images/donut-polynytsia.png" },
       { name: "шоко-апельсин", price: 17, img: "images/donut-choko.png" },
       { name: "вишня",         price: 17, img: "images/donut-vyshnia.png" },

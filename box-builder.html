@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Наш смак — Створи свій бокс</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="box-builder.css">
 </head>
@@ -25,7 +25,7 @@
       <a href="index.html" class="header__cat-tab">Печиво</a>
       <button class="header__cat-tab">Мафіни & Донати</button>
       <button class="header__cat-tab">Набори</button>
-      <button class="header__cat-tab header__cat-tab--active">Створи свій бокс</button>
+      <button class="header__cat-tab header__cat-tab--active header__cat-tab--box">Зібрати бокс</button>
     </nav>
     <div class="header__right">
       <div class="header__nav">
@@ -35,10 +35,10 @@
         <a href="#" class="header__nav-link">B2B</a>
       </div>
       <div class="header__icons">
-        <button class="header__icon-btn" aria-label="Пошук">
+        <button class="header__icon-btn header__search-btn" aria-label="Пошук">
           <img src="icons/search.svg" width="24" height="24" alt="">
         </button>
-        <button class="header__icon-btn" aria-label="Акаунт">
+        <button class="header__icon-btn header__account-btn" aria-label="Акаунт">
           <img src="icons/account.svg" width="24" height="24" alt="">
         </button>
         <button class="header__icon-btn header__cart-btn" aria-label="Кошик">
@@ -81,8 +81,8 @@
   <main class="main">
     <!-- Subcategory pills -->
     <div class="subcategories">
-      <button class="pill pill--active" data-filter="sandwich">печиво-сендвіч</button>
-      <button class="pill" data-filter="classic">печиво класичне</button>
+      <button class="pill pill--active" data-filter="sandwich">сендвіч</button>
+      <button class="pill" data-filter="classic">печиво</button>
       <button class="pill" data-filter="donuts">донати</button>
       <button class="pill" data-filter="muffins">мафіни</button>
     </div>
