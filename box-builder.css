@@ -54,7 +54,29 @@
 }
 
 .box-layout .product-card__dropdown--clickable:hover {
-  border-color: var(--orange);
+  border-color: var(--green-300);
+}
+
+.box-layout .product-card__dropdown-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 32px;
+  width: 100%;
+}
+
+.box-layout .product-card__weight {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.box-layout .product-card__price-group {
+  margin-left: auto;
+  flex: 0 0 auto;
 }
 
 .box-layout .product-card__options {
@@ -64,57 +86,6 @@
 /* Caret rotation when open */
 .product-card__caret--open {
   transform: rotate(180deg);
-}
-
-/* --- Dropdown menu --- */
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: var(--beige-100);
-  border: 1px solid var(--green-100);
-  border-radius: 16px;
-  overflow: hidden;
-  z-index: 10;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.dropdown-menu__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--brown-500);
-  transition: background 0.15s;
-}
-
-.dropdown-menu__item:hover {
-  background: var(--beige-250);
-}
-
-.dropdown-menu__item--active {
-  background: var(--beige-250);
-}
-
-.dropdown-menu__flavor {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 16px;
-}
-
-.dropdown-menu__price {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--brown-500);
 }
 
 .dropdown-menu__badge {
@@ -348,8 +319,9 @@
   justify-content: space-between;
   background: var(--beige-250);
   border-radius: 12px;
-  height: 64px;
+  min-height: 76px;
   padding: 8px;
+  gap: 12px;
 }
 
 .box-sidebar__item-info {
@@ -372,6 +344,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  gap: 2px;
 }
 
 .box-sidebar__item-name {
@@ -393,9 +366,67 @@
   color: var(--green-500);
 }
 
+.box-sidebar__item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.box-sidebar__qty-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--green-100);
+  border-radius: 999px;
+  background: var(--beige-100);
+}
+
+.box-sidebar__qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--green-300);
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.box-sidebar__qty-btn:hover {
+  background: rgba(21, 150, 66, 0.08);
+}
+
+.box-sidebar__qty-btn--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.box-sidebar__qty-btn--disabled:hover {
+  background: transparent;
+}
+
+.box-sidebar__qty-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.box-sidebar__qty-value {
+  min-width: 24px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--brown-500);
+}
+
 .box-sidebar__item-remove {
-  width: 16px;
-  height: 16px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   cursor: pointer;
   background: none;
@@ -832,19 +863,37 @@
     font-size: 28px;
   }
 
+  .box-drawer__content .box-sidebar__items {
+    max-height: none;
+    overflow: visible;
+  }
+
   .box-drawer__content .box-sidebar__checkout {
     min-height: 48px;
     font-size: 20px;
   }
 
-  /* Dropdown menu */
-  .dropdown-menu {
-    border-radius: 12px;
+  .box-drawer__content .box-sidebar__item {
+    min-height: 82px;
   }
 
-  .dropdown-menu__item {
-    height: 40px;
-    padding: 0 12px;
-    font-size: 14px;
+  .box-drawer__content .box-sidebar__item-actions {
+    gap: 8px;
+  }
+
+  .box-drawer__content .box-sidebar__qty-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .box-drawer__content .box-sidebar__qty-value {
+    min-width: 28px;
+    font-size: 18px;
+  }
+
+  .dropdown-menu__badge {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
   }
 }

@@ -1,39 +1,93 @@
-// === Product data (shortened, values from Figma) ===
-const products = [
-  // Класичне
-  { id: 1,  name: "Американо дропс",     sub: "classic",  weight: "L · 800 г",  price: "178 грн", img: "images/amerikano-drops.png" },
-  { id: 2,  name: "Білочка",             sub: "classic",  weight: "L · 800 г",  price: "198 грн", img: "images/bilochka.png" },
-  { id: 3,  name: "Домашнє",             sub: "classic",  weight: "L · 900 г",  price: "105 грн", img: "images/domashne.png" },
-  { id: 4,  name: "Бабусине",            sub: "classic",  weight: "L · 900 г",  price: "138 грн", img: "images/babusyne.png" },
-  { id: 5,  name: "Кватро дропс",        sub: "classic",  weight: "L · 1 кг",   price: "174 грн", img: "images/kvatro-drops.png" },
-  { id: 6,  name: "Джемка абрикос",      sub: "classic",  weight: "L · 900 г",  price: "100 грн", img: "images/dzhemka-abrykos.png" },
-  // Сендвіч
-  { id: 7,  name: "Бісквітка",                          sub: "sandwich", weight: "L · 800 г", price: "174 грн", img: "images/biskvitka.png" },
-  { id: 8,  name: "Джайв",                              sub: "sandwich", weight: "L · 1 кг",  price: "214 грн", img: "images/dzhaiv.png" },
-  { id: 9,  name: "Орбіта",                             sub: "sandwich", weight: "L · 1 кг",  price: "172 грн", img: "images/orbita.png" },
-  { id: 10, name: "Магія Арахіс",                       sub: "sandwich", weight: "L · 1 кг",  price: "198 грн", img: "images/magia-arahis.png" },
-  { id: 11, name: "Магія Кокос",                        sub: "sandwich", weight: "L · 1 кг",  price: "198 грн", img: "images/magia-cocos.png" },
-  { id: 12, name: "Солодка паличка згущене молоко",     sub: "sandwich", weight: "L · 900 г", price: "190 грн", img: "images/paluchka-zgushenka.png" },
-  { id: 13, name: "Солодка паличка пряжене молоко",     sub: "sandwich", weight: "L · 900 г", price: "176 грн", img: "images/paluchka-moloko.png" },
-  { id: 14, name: "Завитушка арахіс та згущене молоко", sub: "sandwich", weight: "L · 900 г", price: "220 грн", img: "images/zavytushka-arahis.png" },
-  { id: 15, name: "Завитушка згущене молоко",           sub: "sandwich", weight: "L · 900 г", price: "188 грн", img: "images/zavytushka-zgushenka.png" },
-  { id: 16, name: "Завитушка пряжене молоко",           sub: "sandwich", weight: "L · 900 г", price: "214 грн", img: "images/zavytushka-moloko.png" },
-  { id: 17, name: "Завитушка мак та згущене молоко",    sub: "sandwich", weight: "L · 900 г", price: "214 грн", img: "images/zavytushka-mak.png" },
-  { id: 18, name: "Завитушка сінамон",                  sub: "sandwich", weight: "L · 900 г", price: "206 грн", img: "images/zavytushka-cinamon.png" },
-  { id: 19, name: "Завитушки шоко",                     sub: "sandwich", weight: "L · 900 г", price: "198 грн", img: "images/zavytushka-choko.png" },
-  { id: 20, name: "Завитушка яблуко",                   sub: "sandwich", weight: "L · 900 г", price: "158 грн", img: "images/zavytushka-jabluko.png" },
-  { id: 21, name: "Малібу згущене молоко",              sub: "sandwich", weight: "L · 1 кг",  price: "176 грн", img: "images/malibu-zgushenka.png" },
-  { id: 22, name: "Малібу какао крем",                  sub: "sandwich", weight: "L · 1 кг",  price: "180 грн", img: "images/malibu-cacao.png" },
-  { id: 23, name: "Малібу креме",                       sub: "sandwich", weight: "L · 1 кг",  price: "176 грн", img: "images/malibu-creme.png" },
-  { id: 24, name: "Малібу тоффі-карамель",              sub: "sandwich", weight: "L · 1 кг",  price: "176 грн", img: "images/malibu-caramel.png" },
-  { id: 25, name: "Нова Прага какао крем",              sub: "sandwich", weight: "L · 1 кг",  price: "202 грн", img: "images/praha-cacao.png" },
-  { id: 26, name: "Нова Прага фісташка",                sub: "sandwich", weight: "L · 1 кг",  price: "198 грн", img: "images/praha-fistashka.png" },
-  { id: 27, name: "Нова Прага тоффі-карамель",          sub: "sandwich", weight: "L · 1 кг",  price: "198 грн", img: "images/praha-caramel.png" },
-  { id: 28, name: "Нова Прага креме",                   sub: "sandwich", weight: "L · 1 кг",  price: "198 грн", img: "images/praha-creme.png" },
-];
+const catalogScope = (document.body.dataset.catalogScope || "")
+  .split(",")
+  .map((value) => value.trim())
+  .filter(Boolean);
+const products = window.getCatalogProducts()
+  .filter((product) => !catalogScope.length || catalogScope.includes(product.sub));
+const catalogPromos = window.CATALOG_PROMOS || {};
+const selectedPackById = {};
+let openPackDropdownId = null;
+const enablePromos = document.body.dataset.promos === "true";
+const initialFilter = document.body.dataset.initialFilter || "all";
+
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 767px)").matches;
+}
+
+function getSelectedPack(product) {
+  const selectedIndex = selectedPackById[product.id] || 0;
+  return product.packOptions?.[selectedIndex] || null;
+}
+
+function togglePackDropdown(productId, event) {
+  event.stopPropagation();
+  if (isMobileViewport()) {
+    openPackMobileSheet(productId);
+    return;
+  }
+  openPackDropdownId = openPackDropdownId === productId ? null : productId;
+  render(getActiveFilter());
+}
+
+function openPackMobileSheet(productId) {
+  const product = products.find((item) => item.id === productId);
+  if (!product?.packOptions?.length || !window.MobileOptionsSheet) {
+    return;
+  }
+
+  const activeIndex = selectedPackById[product.id] || 0;
+  window.MobileOptionsSheet.open({
+    title: product.name,
+    items: product.packOptions.map((option, index) => ({
+      label: option.label,
+      price: `${option.price} грн`,
+      active: index === activeIndex,
+    })),
+    onSelect: (index) => {
+      selectedPackById[product.id] = index;
+      render(getActiveFilter());
+    },
+  });
+}
+
+function selectPack(productId, packIndex, event) {
+  event.stopPropagation();
+  selectedPackById[productId] = packIndex;
+  openPackDropdownId = null;
+  window.MobileOptionsSheet?.close();
+  render(getActiveFilter());
+}
+
+function getActiveFilter() {
+  return document.querySelector(".pill--active")?.dataset.filter || "all";
+}
 
 // === Card HTML ===
 function cardHTML(p) {
+  const selectedPack = getSelectedPack(p);
+  const hasPackOptions = (p.packOptions?.length || 0) > 1;
+  const isOpen = openPackDropdownId === p.id;
+  const visibleOptions = hasPackOptions
+    ? p.packOptions
+        .map((option, index) => ({ option, index }))
+        .filter(({ index }) => index !== (selectedPackById[p.id] || 0))
+    : [];
+
+  let dropdownMenu = "";
+  if (isOpen) {
+    dropdownMenu = `
+      <div class="dropdown-menu">
+        ${visibleOptions.map(({ option, index }) => `
+          <button
+            class="dropdown-menu__item"
+            onclick="selectPack(${p.id}, ${index}, event)">
+            <span class="dropdown-menu__flavor">${option.label}</span>
+            <span class="dropdown-menu__price">${option.price} грн</span>
+          </button>
+        `).join("")}
+      </div>`;
+  }
+
   return `
     <div class="product-card" data-sub="${p.sub || ''}">
       <div class="product-card__image-wrap">
@@ -41,64 +95,67 @@ function cardHTML(p) {
       </div>
       <div class="product-card__name"><a href="#">${p.name}</a></div>
       <div class="product-card__options">
-        <div class="product-card__dropdown">
-          <span class="product-card__weight">${p.weight}</span>
-          <div class="product-card__price-group">
-            <span class="product-card__price">${p.price}</span>
-            <img class="product-card__caret" src="icons/caret-big-down-filled.svg" alt="">
+        <div class="product-card__dropdown-wrap">
+          <div class="product-card__dropdown ${hasPackOptions ? "product-card__dropdown--clickable" : ""} ${isOpen ? "product-card__dropdown--open" : ""}"
+            ${hasPackOptions ? `onclick="togglePackDropdown(${p.id}, event)"` : ""}>
+            <span class="product-card__weight">${selectedPack ? selectedPack.label : p.weight}</span>
+            <div class="product-card__price-group">
+            <span class="product-card__price">${selectedPack ? `${selectedPack.price} грн` : p.price}</span>
+              ${hasPackOptions ? `<img class="product-card__caret ${isOpen ? "product-card__caret--open" : ""}" src="icons/caret-big-down-filled.svg" alt="">` : ""}
+            </div>
           </div>
+          ${dropdownMenu}
         </div>
       </div>
       <button class="product-card__btn">У кошик</button>
     </div>`;
 }
 
-// === Promo Cards HTML ===
-const promoBoxHTML = `
+function promoCardHTML(promo) {
+  return `
     <div class="promo-card">
       <div class="promo-card__text">
-        <div class="promo-card__title">Збери свій бокс</div>
-        <div class="promo-card__desc">Шукаєш особливий подарунок? Тоді тобі сюди. Ми навіть підпишемо від тебе листівочку</div>
+        <div class="promo-card__title">${promo.title}</div>
+        <div class="promo-card__desc">${promo.description}</div>
       </div>
-      <a class="promo-card__btn" href="box-builder.html">
-        <span class="promo-card__btn-desktop">Зібрати свій бокс</span>
-        <span class="promo-card__btn-mobile">Зібрати бокс</span>
+      <a class="promo-card__btn" href="${promo.href}">
+        <span class="promo-card__btn-desktop">${promo.desktopLabel}</span>
+        <span class="promo-card__btn-mobile">${promo.mobileLabel}</span>
       </a>
     </div>`;
-
-const promoSetsHTML = `
-    <div class="promo-card">
-      <div class="promo-card__text">
-        <div class="promo-card__title">Хочеш все й одразу?</div>
-        <div class="promo-card__desc">Переглянь наші набори, куди входить асортимент печива, мафінів та донатів! Зібрали для тебе улюблені види в одному наборі.</div>
-      </div>
-      <a class="promo-card__btn" href="#">
-        <span class="promo-card__btn-desktop">Обрати набір</span>
-        <span class="promo-card__btn-mobile">Обрати набір</span>
-      </a>
-    </div>`;
+}
 
 // === Render ===
 function render(filter) {
   const grid = document.getElementById("productGrid");
   const list = filter === "all" ? products : products.filter(p => p.sub === filter);
   const cards = list.map(cardHTML);
-  // Insert promo cards for sandwich tab
-  if (filter === "sandwich") {
-    cards.splice(3, 0, promoBoxHTML);   // row 1, position 4
-    cards.splice(15, 0, promoSetsHTML); // row 4, position 4
-  }
+  const promos = enablePromos ? (catalogPromos[filter] || []) : [];
+
+  promos.forEach((promo, index) => {
+    const insertAt = Math.min(promo.insertAfter + index, cards.length);
+    cards.splice(insertAt, 0, promoCardHTML(promo));
+  });
+
   grid.innerHTML = cards.join("");
 }
+
+document.addEventListener("click", () => {
+  if (openPackDropdownId !== null) {
+    openPackDropdownId = null;
+    render(getActiveFilter());
+  }
+});
 
 // === Pill filtering ===
 document.querySelectorAll(".pill").forEach(pill => {
   pill.addEventListener("click", () => {
     document.querySelectorAll(".pill").forEach(p => p.classList.remove("pill--active"));
     pill.classList.add("pill--active");
+    openPackDropdownId = null;
     render(pill.dataset.filter);
   });
 });
 
 // === Init ===
-render("all");
+render(initialFilter);

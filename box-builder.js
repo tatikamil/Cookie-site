@@ -4,158 +4,10 @@ const BOX_CAPACITY = 360;
 const TOTAL_CELLS = 36;
 const UNITS_PER_CELL = 10;
 
-// === Product data ===
-const products = [
-  // --- Печиво-сендвіч (units: 5 per qty) ---
-  { id: 1, category: "sandwich", name: "Біскавітка", pcs: 2, units: 5, price: 14, img: "images/biskvitka.png", flavors: null },
-  { id: 2, category: "sandwich", name: "Орбіта",    pcs: 2, units: 5, price: 14, img: "images/orbita.png",     flavors: null },
-  { id: 3, category: "sandwich", name: "Джайв",     pcs: 2, units: 5, price: 18, img: "images/dzhaiv.png",     flavors: null },
-  {
-    id: 4, category: "sandwich", name: "Нова Прага", pcs: 4, units: 5,
-    flavors: [
-      { name: "тоффі-карамель", price: 12, img: "images/praha-caramel.png" },
-      { name: "какао-крем",     price: 12, img: "images/praha-cacao.png" },
-      { name: "креме",          price: 12, img: "images/praha-creme.png" },
-      { name: "фісташка",       price: 12, img: "images/praha-fistashka.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 5, category: "sandwich", name: "Малібу", pcs: 4, units: 5,
-    flavors: [
-      { name: "крем",            price: 15, img: "images/malibu-creme.png" },
-      { name: "какао",           price: 15, img: "images/malibu-cacao.png" },
-      { name: "карамель",        price: 15, img: "images/malibu-caramel.png" },
-      { name: "згущене молоко",  price: 15, img: "images/malibu-zgushenka.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 19, category: "sandwich", name: "Магія", pcs: 4, units: 5,
-    flavors: [
-      { name: "кокос",   price: 18, img: "images/magia-cocos.png" },
-      { name: "арахіс",  price: 18, img: "images/magia-arahis.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 20, category: "sandwich", name: "Солодка паличка", pcs: 4, units: 5,
-    flavors: [
-      { name: "згущене молоко", price: 13, img: "images/paluchka-zgushenka.png" },
-      { name: "молоко",         price: 13, img: "images/paluchka-moloko.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 21, category: "sandwich", name: "Завитушки", pcs: 2, units: 5,
-    flavors: [
-      { name: "арахіс-згущенка",  price: 16, img: "images/zavytushka-arahis.png" },
-      { name: "шоколад",           price: 16, img: "images/zavytushka-choko.png" },
-      { name: "цукор",             price: 16, img: "images/zavytushka-tsukor.png" },
-      { name: "яблуко",            price: 16, img: "images/zavytushka-jabluko.png" },
-      { name: "молоко",            price: 16, img: "images/zavytushka-moloko.png" },
-      { name: "кориця",            price: 16, img: "images/zavytushka-cinamon.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 22, category: "sandwich", name: "Фрутіко", pcs: 4, units: 5,
-    flavors: [
-      { name: "шоко-вишня",  price: 16, img: "images/frutiko-vyshnia.png" },
-      { name: "абрикос",     price: 16, img: "images/frutiko-abrykos.png" },
-      { name: "шоколад",     price: 16, img: "images/frutiko-choko.png" },
-      { name: "полуниця",    price: 16, img: "images/frutiko-polynytsia.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 23, category: "sandwich", name: "Дуетто", pcs: 4, units: 5,
-    flavors: [
-      { name: "дабл крем",  price: 17, img: "images/duetto-doblecreme.png" },
-      { name: "полуниця",   price: 17, img: "images/duetto-polunytsia.png" },
-    ],
-    activeFlavor: 0,
-  },
-
-  // --- Печиво класичне (units: 4 per qty) ---
-  { id: 6,  category: "classic", name: "Домашнє",          pcs: 4, units: 4, price: 11, img: "images/domashne.png",      flavors: null },
-  { id: 7,  category: "classic", name: "Бабусине",         pcs: 4, units: 4, price: 14, img: "images/babusyne.png",      flavors: null },
-  { id: 8,  category: "classic", name: "Насолода",         pcs: 4, units: 4, price: 14, img: "images/nasoloda.png",      flavors: null },
-  { id: 9,  category: "classic", name: "Забава",           pcs: 4, units: 4, price: 17, img: "images/zabava.png",        flavors: null },
-  { id: 10, category: "classic", name: "Задавака",         pcs: 4, units: 4, price: 15, img: "images/zadavaka.png",      flavors: null },
-  {
-    id: 11, category: "classic", name: "Американо", pcs: 4, units: 4,
-    flavors: [
-      { name: "шоко-дропс", price: 13, img: "images/amerikano-drops.png" },
-      { name: "родзинки",   price: 13, img: "images/amerikano-rodzynky.png" },
-    ],
-    activeFlavor: 0,
-  },
-  { id: 12, category: "classic", name: "Білочка",          pcs: 4, units: 4, price: 20, img: "images/bilochka.png",      flavors: null },
-  { id: 13, category: "classic", name: "Білочка в глазурі", pcs: 4, units: 4, price: 20, img: "images/bilochka-glazur.png", flavors: null },
-  {
-    id: 14, category: "classic", name: "Кватро", pcs: 4, units: 4,
-    flavors: [
-      { name: "шоко-дропс", price: 10, img: "images/kvatro-drops.png" },
-      { name: "мак",         price: 10, img: "images/kvatro-mak.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 15, category: "classic", name: "Джемка", pcs: 4, units: 4,
-    flavors: [
-      { name: "вишня",    price: 14, img: "images/dzhemka-vyshnia.png" },
-      { name: "абрикос",  price: 14, img: "images/dzhemka-abrykos.png" },
-      { name: "яблуко",   price: 14, img: "images/dzhemka-jabluko.png" },
-      { name: "полуниця", price: 14, img: "images/dzhemka-polunytsia.png" },
-    ],
-    activeFlavor: 0,
-  },
-  {
-    id: 16, category: "classic", name: "Завитушка", pcs: 4, units: 4,
-    flavors: [
-      { name: "кориця",         price: 14, img: "images/zavytushka-korytsia.png" },
-      { name: "мак",            price: 14, img: "images/zavytushka-mak.png" },
-      { name: "арахіс",         price: 14, img: "images/zavytushka-arahis.png" },
-      { name: "згущене молоко", price: 14, img: "images/zavytushka-zgushenka.png" },
-    ],
-    activeFlavor: 0,
-  },
-
-  // --- Донати ---
-  {
-    id: 17, category: "donuts", name: "Донат", pcs: 1, units: 10,
-    flavors: [
-      { name: "великодній",    price: 17, img: "images/donut-velykodniy.png" },
-      { name: "персик",        price: 17, img: "images/donut-velykodniy2.png" },
-      { name: "згущенка",      price: 17, img: "images/donut-zgyshenka.png" },
-      { name: "абрикос",       price: 17, img: "images/donut-abrykos.png" },
-      { name: "полуниця",      price: 17, img: "images/donut-polynytsia.png" },
-      { name: "шоко-апельсин", price: 17, img: "images/donut-choko.png" },
-      { name: "вишня",         price: 17, img: "images/donut-vyshnia.png" },
-    ],
-    activeFlavor: 0,
-  },
-  // --- Мафіни ---
-  {
-    id: 18, category: "muffins", name: "Мафін", pcs: 1, units: 12,
-    flavors: [
-      { name: "великодній",    price: 17, img: "images/mafin-velykodniy.png" },
-      { name: "полуниця",      price: 17, img: "images/mafin-velykodniy2.png" },
-      { name: "какао",         price: 17, img: "images/mafin-cacao.png" },
-      { name: "абрикос",       price: 17, img: "images/mafin-abrykos.png" },
-      { name: "апельсин",      price: 17, img: "images/mafin-apelsyn.png" },
-      { name: "вишня",         price: 17, img: "images/mafin-vyshnia.png" },
-      { name: "згущенка",      price: 17, img: "images/mafin-zgushenka.png" },
-      { name: "фісташка",      price: 17, img: "images/mafin-fistashka.png" },
-      { name: "шоко-крем",     price: 17, img: "images/mafin-chococreme.png" },
-      { name: "крем",          price: 17, img: "images/mafin-creme.png" },
-      { name: "родзинки",      price: 17, img: "images/mafin-rodzynki.png" },
-      { name: "персик",        price: 17, img: "images/mafin-abrykos.png" },
-    ],
-    activeFlavor: 0,
-  },
-];
+const products = window.getBoxBuilderProducts();
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 767px)").matches;
+}
 
 // === Active category filter ===
 let activeCategory = "sandwich";
@@ -242,8 +94,33 @@ let openDropdownId = null;
 
 function toggleDropdown(id, e) {
   e.stopPropagation();
+  if (isMobileViewport()) {
+    openFlavorMobileSheet(id);
+    return;
+  }
   openDropdownId = openDropdownId === id ? null : id;
   render();
+}
+
+function openFlavorMobileSheet(productId) {
+  const product = products.find((item) => item.id === productId);
+  if (!product?.flavors?.length || !window.MobileOptionsSheet) {
+    return;
+  }
+
+  window.MobileOptionsSheet.open({
+    title: product.name,
+    items: product.flavors.map((flavor, index) => ({
+      label: flavor.name,
+      price: `${flavor.price} грн`,
+      active: index === product.activeFlavor,
+      badge: box[boxKey(product.id, index)] || 0,
+    })),
+    onSelect: (index) => {
+      product.activeFlavor = index;
+      render();
+    },
+  });
 }
 
 function selectFlavor(productId, flavorIndex, e) {
@@ -251,6 +128,7 @@ function selectFlavor(productId, flavorIndex, e) {
   const product = products.find(p => p.id === productId);
   product.activeFlavor = flavorIndex;
   openDropdownId = null;
+  window.MobileOptionsSheet?.close();
   render();
 }
 
@@ -435,11 +313,12 @@ function cardHTML(p) {
   let dropdownMenu = '';
   if (p.flavors && isOpen) {
     const options = p.flavors.map((f, i) => {
+      if (i === p.activeFlavor) return '';
       const fKey = boxKey(p.id, i);
       const fQty = box[fKey] || 0;
       const badge = fQty > 0 ? `<span class="dropdown-menu__badge">${fQty}</span>` : '';
       return `
-      <button class="dropdown-menu__item ${i === p.activeFlavor ? 'dropdown-menu__item--active' : ''}"
+      <button class="dropdown-menu__item"
               onclick="selectFlavor(${p.id}, ${i}, event)">
         <span class="dropdown-menu__flavor">${f.name}${badge}</span>
         <span class="dropdown-menu__price">${f.price} грн</span>
@@ -454,16 +333,20 @@ function cardHTML(p) {
         <img class="product-card__image" src="${img}" alt="${p.name}">
       </div>
       <div class="product-card__name"><a href="#">${p.name}</a><span class="product-card__pcs">${p.pcs} шт</span></div>
-      <div class="product-card__options" style="position:relative">
-        <div class="product-card__dropdown ${p.flavors ? 'product-card__dropdown--clickable' : ''}"
-             ${p.flavors ? `onclick="toggleDropdown(${p.id}, event)"` : ''}>
-          <span class="product-card__weight">${flavorName || ''}</span>
-          <div class="product-card__price-group">
-            <span class="product-card__price">${price} грн</span>
-            ${p.flavors ? `<img class="product-card__caret ${isOpen ? 'product-card__caret--open' : ''}" src="icons/caret-big-down-filled.svg" alt="">` : ''}
+      <div class="product-card__options">
+        <div class="product-card__dropdown-wrap">
+          <div class="product-card__dropdown ${p.flavors ? 'product-card__dropdown--clickable' : ''} ${isOpen ? 'product-card__dropdown--open' : ''}"
+               ${p.flavors ? `onclick="toggleDropdown(${p.id}, event)"` : ''}>
+            <div class="product-card__dropdown-head">
+              <span class="product-card__weight" title="${flavorName || ''}">${flavorName || ''}</span>
+              <div class="product-card__price-group">
+                <span class="product-card__price">${price} грн</span>
+                ${p.flavors ? `<img class="product-card__caret ${isOpen ? 'product-card__caret--open' : ''}" src="icons/caret-big-down-filled.svg" alt="">` : ''}
+              </div>
+            </div>
           </div>
+          ${dropdownMenu}
         </div>
-        ${dropdownMenu}
       </div>
       ${bottomSection}
     </div>`;
@@ -474,6 +357,9 @@ function sidebarItemHTML(key) {
   const data = getItemData(key);
   const qty = box[key];
   const displayName = data.flavor ? `${data.name} ${data.flavor}` : data.name;
+  const canIncrement = getRemainingUnits() >= data.units;
+  const plusDisabled = !canIncrement ? ' box-sidebar__qty-btn--disabled' : '';
+  const plusOnclick = canIncrement ? `onclick="updateQty('${key}', 1)"` : '';
 
   return `
     <div class="box-sidebar__item">
@@ -481,10 +367,17 @@ function sidebarItemHTML(key) {
         <img class="box-sidebar__item-img" src="${data.img}" alt="${displayName}">
         <div class="box-sidebar__item-text">
           <span class="box-sidebar__item-name">${displayName}</span>
-          <span class="box-sidebar__item-price">${qty} \u00d7 ${data.price} грн</span>
+          <span class="box-sidebar__item-price">${data.price} грн / шт</span>
         </div>
       </div>
-      <button class="box-sidebar__item-remove" onclick="removeFromBox('${key}')">${ICON_CLOSE}</button>
+      <div class="box-sidebar__item-actions">
+        <div class="box-sidebar__qty-control">
+          <button class="box-sidebar__qty-btn" onclick="updateQty('${key}', -1)" aria-label="Зменшити кількість">${ICON_MINUS}</button>
+          <span class="box-sidebar__qty-value">${qty}</span>
+          <button class="box-sidebar__qty-btn${plusDisabled}" ${plusOnclick} aria-label="Збільшити кількість">${ICON_PLUS}</button>
+        </div>
+        <button class="box-sidebar__item-remove" onclick="removeFromBox('${key}')" aria-label="Видалити позицію">${ICON_CLOSE}</button>
+      </div>
     </div>`;
 }
 

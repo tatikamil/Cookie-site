@@ -3,26 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Наш смак — Печиво</title>
+  <title>Наш смак — Мафіни & Донати</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-catalog-scope="classic,sandwich" data-promos="true" data-initial-filter="all">
+<body data-catalog-scope="muffins,donuts" data-promos="false" data-initial-filter="all">
 
-  <!-- Overlay -->
   <div class="overlay">
     <span>Безкоштовна доставка від 1000 грн 🍩🍪</span>
   </div>
 
-  <!-- Header -->
   <header class="header">
     <div class="header__logo">
       <a href="index.html"><img src="images/logo.svg" alt="Наш смак"></a>
     </div>
     <nav class="header__categories">
-      <a href="index.html" class="header__cat-tab header__cat-tab--active">Печиво</a>
-      <a href="muffins-donuts.html" class="header__cat-tab">Мафіни & Донати</a>
+      <a href="index.html" class="header__cat-tab">Печиво</a>
+      <a href="muffins-donuts.html" class="header__cat-tab header__cat-tab--active">Мафіни & Донати</a>
       <button class="header__cat-tab">Набори</button>
       <a href="box-builder.html" class="header__cat-tab header__cat-tab--box">Зібрати бокс</a>
     </nav>
@@ -52,7 +50,6 @@
     </div>
   </header>
 
-  <!-- Mobile menu -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <div class="mobile-menu">
       <div class="mobile-menu__header">
@@ -71,8 +68,8 @@
         <a href="#" class="mobile-menu__link">
           <img src="icons/account.svg" width="20" height="20" alt=""> Акаунт
         </a>
-        <a href="index.html" class="mobile-menu__link mobile-menu__link--highlight" aria-current="page">Печиво</a>
-        <a href="muffins-donuts.html" class="mobile-menu__link">Мафіни & Донати</a>
+        <a href="index.html" class="mobile-menu__link">Печиво</a>
+        <a href="muffins-donuts.html" class="mobile-menu__link mobile-menu__link--highlight" aria-current="page">Мафіни & Донати</a>
         <a href="box-builder.html" class="mobile-menu__link">Зібрати бокс</a>
         <a href="#" class="mobile-menu__link">Про нас</a>
         <a href="#" class="mobile-menu__link">B2B</a>
@@ -81,14 +78,12 @@
   </div>
 
   <main class="main">
-    <!-- Subcategory pills -->
     <div class="subcategories">
-      <button class="pill pill--active" data-filter="all">Все печиво</button>
-      <button class="pill" data-filter="sandwich">сендвіч</button>
-      <button class="pill" data-filter="classic">класичне</button>
+      <button class="pill pill--active" data-filter="all">Всі бісквіти</button>
+      <button class="pill" data-filter="muffins">мафіни</button>
+      <button class="pill" data-filter="donuts">донати</button>
     </div>
 
-    <!-- Product grid -->
     <div class="product-grid" id="productGrid"></div>
   </main>
 
