@@ -7,117 +7,117 @@ const UNITS_PER_CELL = 10;
 // === Product data ===
 const products = [
   // --- Печиво-сендвіч (units: 5 per qty) ---
-  { id: 1, category: "sandwich", name: "Біскавітка", pcs: 2, units: 5, price: 172, img: "images/biskvitka.png", flavors: null },
-  { id: 2, category: "sandwich", name: "Орбіта",    pcs: 2, units: 5, price: 172, img: "images/orbita.png",     flavors: null },
-  { id: 3, category: "sandwich", name: "Джайв",     pcs: 2, units: 5, price: 214, img: "images/dzhaiv.png",     flavors: null },
+  { id: 1, category: "sandwich", name: "Біскавітка", pcs: 2, units: 5, price: 14, img: "images/biskvitka.png", flavors: null },
+  { id: 2, category: "sandwich", name: "Орбіта",    pcs: 2, units: 5, price: 14, img: "images/orbita.png",     flavors: null },
+  { id: 3, category: "sandwich", name: "Джайв",     pcs: 2, units: 5, price: 18, img: "images/dzhaiv.png",     flavors: null },
   {
     id: 4, category: "sandwich", name: "Нова Прага", pcs: 4, units: 5,
     flavors: [
-      { name: "тоффі-карамель", price: 40, img: "images/praha-caramel.png" },
-      { name: "какао-крем",     price: 40, img: "images/praha-cacao.png" },
-      { name: "креме",          price: 40, img: "images/praha-creme.png" },
-      { name: "фісташка",       price: 40, img: "images/praha-fistashka.png" },
+      { name: "тоффі-карамель", price: 12, img: "images/praha-caramel.png" },
+      { name: "какао-крем",     price: 12, img: "images/praha-cacao.png" },
+      { name: "креме",          price: 12, img: "images/praha-creme.png" },
+      { name: "фісташка",       price: 12, img: "images/praha-fistashka.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 5, category: "sandwich", name: "Малібу", pcs: 4, units: 5,
     flavors: [
-      { name: "крем",            price: 50, img: "images/malibu-creme.png" },
-      { name: "какао",           price: 50, img: "images/malibu-cacao.png" },
-      { name: "карамель",        price: 50, img: "images/malibu-caramel.png" },
-      { name: "згущене молоко",  price: 50, img: "images/malibu-zgushenka.png" },
+      { name: "крем",            price: 15, img: "images/malibu-creme.png" },
+      { name: "какао",           price: 15, img: "images/malibu-cacao.png" },
+      { name: "карамель",        price: 15, img: "images/malibu-caramel.png" },
+      { name: "згущене молоко",  price: 15, img: "images/malibu-zgushenka.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 19, category: "sandwich", name: "Магія", pcs: 4, units: 5,
     flavors: [
-      { name: "кокос",   price: 78, img: "images/magia-cocos.png" },
-      { name: "арахіс",  price: 78, img: "images/magia-arahis.png" },
+      { name: "кокос",   price: 18, img: "images/magia-cocos.png" },
+      { name: "арахіс",  price: 18, img: "images/magia-arahis.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 20, category: "sandwich", name: "Солодка паличка", pcs: 4, units: 5,
     flavors: [
-      { name: "згущене молоко", price: 55, img: "images/paluchka-zgushenka.png" },
-      { name: "молоко",         price: 55, img: "images/paluchka-moloko.png" },
+      { name: "згущене молоко", price: 13, img: "images/paluchka-zgushenka.png" },
+      { name: "молоко",         price: 13, img: "images/paluchka-moloko.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 21, category: "sandwich", name: "Завитушки", pcs: 2, units: 5,
     flavors: [
-      { name: "арахіс-згущенка",  price: 65, img: "images/zavytushka-arahis.png" },
-      { name: "шоколад",           price: 65, img: "images/zavytushka-choko.png" },
-      { name: "цукор",             price: 65, img: "images/zavytushka-tsukor.png" },
-      { name: "яблуко",            price: 65, img: "images/zavytushka-jabluko.png" },
-      { name: "молоко",            price: 65, img: "images/zavytushka-moloko.png" },
-      { name: "кориця",            price: 65, img: "images/zavytushka-cinamon.png" },
+      { name: "арахіс-згущенка",  price: 16, img: "images/zavytushka-arahis.png" },
+      { name: "шоколад",           price: 16, img: "images/zavytushka-choko.png" },
+      { name: "цукор",             price: 16, img: "images/zavytushka-tsukor.png" },
+      { name: "яблуко",            price: 16, img: "images/zavytushka-jabluko.png" },
+      { name: "молоко",            price: 16, img: "images/zavytushka-moloko.png" },
+      { name: "кориця",            price: 16, img: "images/zavytushka-cinamon.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 22, category: "sandwich", name: "Фрутіко", pcs: 4, units: 5,
     flavors: [
-      { name: "шоко-вишня",  price: 65, img: "images/frutiko-vyshnia.png" },
-      { name: "абрикос",     price: 65, img: "images/frutiko-abrykos.png" },
-      { name: "шоколад",     price: 65, img: "images/frutiko-choko.png" },
-      { name: "полуниця",    price: 65, img: "images/frutiko-polynytsia.png" },
+      { name: "шоко-вишня",  price: 16, img: "images/frutiko-vyshnia.png" },
+      { name: "абрикос",     price: 16, img: "images/frutiko-abrykos.png" },
+      { name: "шоколад",     price: 16, img: "images/frutiko-choko.png" },
+      { name: "полуниця",    price: 16, img: "images/frutiko-polynytsia.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 23, category: "sandwich", name: "Дуетто", pcs: 4, units: 5,
     flavors: [
-      { name: "дабл крем",  price: 65, img: "images/duetto-doblecreme.png" },
-      { name: "полуниця",   price: 65, img: "images/duetto-polunytsia.png" },
+      { name: "дабл крем",  price: 17, img: "images/duetto-doblecreme.png" },
+      { name: "полуниця",   price: 17, img: "images/duetto-polunytsia.png" },
     ],
     activeFlavor: 0,
   },
 
   // --- Печиво класичне (units: 4 per qty) ---
-  { id: 6,  category: "classic", name: "Домашнє",          pcs: 4, units: 4, price: 105, img: "images/domashne.png",      flavors: null },
-  { id: 7,  category: "classic", name: "Бабусине",         pcs: 4, units: 4, price: 138, img: "images/babusyne.png",      flavors: null },
-  { id: 8,  category: "classic", name: "Насолода",         pcs: 4, units: 4, price: 138, img: "images/nasoloda.png",      flavors: null },
-  { id: 9,  category: "classic", name: "Забава",           pcs: 4, units: 4, price: 164, img: "images/zabava.png",        flavors: null },
-  { id: 10, category: "classic", name: "Задавака",         pcs: 4, units: 4, price: 140, img: "images/zadavaka.png",      flavors: null },
+  { id: 6,  category: "classic", name: "Домашнє",          pcs: 4, units: 4, price: 11, img: "images/domashne.png",      flavors: null },
+  { id: 7,  category: "classic", name: "Бабусине",         pcs: 4, units: 4, price: 14, img: "images/babusyne.png",      flavors: null },
+  { id: 8,  category: "classic", name: "Насолода",         pcs: 4, units: 4, price: 14, img: "images/nasoloda.png",      flavors: null },
+  { id: 9,  category: "classic", name: "Забава",           pcs: 4, units: 4, price: 17, img: "images/zabava.png",        flavors: null },
+  { id: 10, category: "classic", name: "Задавака",         pcs: 4, units: 4, price: 15, img: "images/zadavaka.png",      flavors: null },
   {
     id: 11, category: "classic", name: "Американо", pcs: 4, units: 4,
     flavors: [
-      { name: "шоко-дропс", price: 48, img: "images/amerikano-drops.png" },
-      { name: "родзинки",   price: 48, img: "images/amerikano-rodzynky.png" },
+      { name: "шоко-дропс", price: 13, img: "images/amerikano-drops.png" },
+      { name: "родзинки",   price: 13, img: "images/amerikano-rodzynky.png" },
     ],
     activeFlavor: 0,
   },
-  { id: 12, category: "classic", name: "Білочка",          pcs: 4, units: 4, price: 198, img: "images/bilochka.png",      flavors: null },
-  { id: 13, category: "classic", name: "Білочка в глазурі", pcs: 4, units: 4, price: 204, img: "images/bilochka-glazur.png", flavors: null },
+  { id: 12, category: "classic", name: "Білочка",          pcs: 4, units: 4, price: 20, img: "images/bilochka.png",      flavors: null },
+  { id: 13, category: "classic", name: "Білочка в глазурі", pcs: 4, units: 4, price: 20, img: "images/bilochka-glazur.png", flavors: null },
   {
     id: 14, category: "classic", name: "Кватро", pcs: 4, units: 4,
     flavors: [
-      { name: "шоко-дропс", price: 32, img: "images/kvatro-drops.png" },
-      { name: "мак",         price: 32, img: "images/kvatro-mak.png" },
+      { name: "шоко-дропс", price: 10, img: "images/kvatro-drops.png" },
+      { name: "мак",         price: 10, img: "images/kvatro-mak.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 15, category: "classic", name: "Джемка", pcs: 4, units: 4,
     flavors: [
-      { name: "вишня",    price: 55, img: "images/dzhemka-vyshnia.png" },
-      { name: "абрикос",  price: 55, img: "images/dzhemka-abrykos.png" },
-      { name: "яблуко",   price: 55, img: "images/dzhemka-jabluko.png" },
-      { name: "полуниця", price: 55, img: "images/dzhemka-polunytsia.png" },
+      { name: "вишня",    price: 14, img: "images/dzhemka-vyshnia.png" },
+      { name: "абрикос",  price: 14, img: "images/dzhemka-abrykos.png" },
+      { name: "яблуко",   price: 14, img: "images/dzhemka-jabluko.png" },
+      { name: "полуниця", price: 14, img: "images/dzhemka-polunytsia.png" },
     ],
     activeFlavor: 0,
   },
   {
     id: 16, category: "classic", name: "Завитушка", pcs: 4, units: 4,
     flavors: [
-      { name: "кориця",         price: 56, img: "images/zavytushka-korytsia.png" },
-      { name: "мак",            price: 56, img: "images/zavytushka-mak.png" },
-      { name: "арахіс",         price: 56, img: "images/zavytushka-arahis.png" },
-      { name: "згущене молоко", price: 56, img: "images/zavytushka-zgushenka.png" },
+      { name: "кориця",         price: 14, img: "images/zavytushka-korytsia.png" },
+      { name: "мак",            price: 14, img: "images/zavytushka-mak.png" },
+      { name: "арахіс",         price: 14, img: "images/zavytushka-arahis.png" },
+      { name: "згущене молоко", price: 14, img: "images/zavytushka-zgushenka.png" },
     ],
     activeFlavor: 0,
   },
@@ -273,17 +273,17 @@ function boxMapHTML() {
     if (i < fullCells) {
       // Fully filled cell
       if (full360) {
-        cells += `<div class="box-map__cell box-map__cell--full"><div class="box-map__cell-inner" style="height:50px;"></div></div>`;
+        cells += `<div class="box-map__cell box-map__cell--full"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
       } else {
-        cells += `<div class="box-map__cell box-map__cell--filled"><div class="box-map__cell-inner" style="height:50px;"></div></div>`;
+        cells += `<div class="box-map__cell box-map__cell--filled"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
       }
     } else if (i === fullCells && partialUnits > 0) {
       // Partially filled cell
-      const fillHeight = Math.round((partialUnits / UNITS_PER_CELL) * 50);
+      const fillPct = Math.round((partialUnits / UNITS_PER_CELL) * 100);
       if (full360) {
-        cells += `<div class="box-map__cell box-map__cell--full box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillHeight}px;"></div></div>`;
+        cells += `<div class="box-map__cell box-map__cell--full box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
       } else {
-        cells += `<div class="box-map__cell box-map__cell--filled box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillHeight}px;"></div></div>`;
+        cells += `<div class="box-map__cell box-map__cell--filled box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
       }
     } else {
       // Empty cell
@@ -561,7 +561,7 @@ function render() {
       <div class="box-sidebar__postcard-header">
         <span class="box-sidebar__postcard-title">Текст листівки:</span>
       </div>
-      <textarea class="box-sidebar__postcard-text" placeholder="Напишіть побажання..." rows="3">${postcardText}</textarea>
+      <textarea class="box-sidebar__postcard-text" placeholder="Напишіть побажання..." rows="1" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';">${postcardText}</textarea>
     </div>`;
 
   // Total

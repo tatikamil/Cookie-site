@@ -85,7 +85,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   padding: 16px 40px;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   color: var(--brown-500);
   white-space: nowrap;
   height: 100%;
@@ -186,8 +186,8 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   padding: 10px 16px;
   border-radius: 24px;
   border: 1px solid var(--green-250);
-  font-family: var(--font-body);
-  font-weight: 600;
+  font-family: var(--font-condensed);
+  font-weight: 400;
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: -0.16px;
@@ -286,7 +286,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 }
 
 .product-card__weight {
-  font-family: var(--font-body);
+  font-family: var(--font-condensed);
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -514,7 +514,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   }
 
   .header__cat-tab {
-    font-size: 18px;
+    font-size: 20px;
     padding: 12px 20px;
   }
 
@@ -746,8 +746,6 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   .pill {
     height: 24px;
     padding: 4px 8px;
-    font-family: var(--font-condensed);
-    font-weight: 400;
     font-size: 14px;
     border-radius: 16px;
   }
