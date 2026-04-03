@@ -5,9 +5,6 @@ const TOTAL_CELLS = 36;
 const UNITS_PER_CELL = 10;
 
 const products = window.getBoxBuilderProducts();
-function isMobileViewport() {
-  return window.matchMedia("(max-width: 767px)").matches;
-}
 
 // === Active category filter ===
 let activeCategory = "sandwich";
@@ -17,37 +14,30 @@ function getFilteredProducts() {
 }
 
 // === Box key helpers ===
-// Key format: "productId" for no-flavor, "productId:flavorIndex" for flavored
-function boxKey(productId, flavorIndex) {
-  return flavorIndex != null ? `${productId}:${flavorIndex}` : `${productId}`;
+function boxKey(productId) {
+  return `${productId}`;
 }
 
 function parseBoxKey(key) {
-  const parts = key.split(":");
   return {
-    productId: Number(parts[0]),
-    flavorIndex: parts[1] != null ? Number(parts[1]) : null,
+    productId: Number(key),
+    flavorIndex: null,
   };
 }
 
 function getItemData(key) {
-  const { productId, flavorIndex } = parseBoxKey(key);
+  const { productId } = parseBoxKey(key);
   const p = products.find(pr => pr.id === productId);
-  if (flavorIndex != null) {
-    const f = p.flavors[flavorIndex];
-    return { name: p.name, flavor: f.name, img: f.img, price: f.price, pcs: p.pcs, units: p.units };
-  }
   return { name: p.name, flavor: null, img: p.img, price: p.price, pcs: p.pcs, units: p.units };
 }
 
-// Current card key (what will be added with current dropdown selection)
+// Current card key
 function currentCardKey(p) {
-  if (p.flavors) return boxKey(p.id, p.activeFlavor);
   return boxKey(p.id);
 }
 
 // === Box state ===
-const box = {}; // { "productId" or "productId:flavorIndex": quantity }
+const box = {}; // { "productId": quantity }
 
 // === Units-based capacity functions ===
 function getTotalUnits() {
@@ -88,56 +78,6 @@ function getBoxStats() {
 const ICON_MINUS = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="3" y1="8" x2="13" y2="8" stroke="#00A439" stroke-width="2" stroke-linecap="round"/></svg>`;
 const ICON_PLUS = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="3" y1="8" x2="13" y2="8" stroke="#00A439" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="3" x2="8" y2="13" stroke="#00A439" stroke-width="2" stroke-linecap="round"/></svg>`;
 const ICON_CLOSE = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="4" x2="12" y2="12" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="4" x2="4" y2="12" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/></svg>`;
-
-// === Dropdown state ===
-let openDropdownId = null;
-
-function toggleDropdown(id, e) {
-  e.stopPropagation();
-  if (isMobileViewport()) {
-    openFlavorMobileSheet(id);
-    return;
-  }
-  openDropdownId = openDropdownId === id ? null : id;
-  render();
-}
-
-function openFlavorMobileSheet(productId) {
-  const product = products.find((item) => item.id === productId);
-  if (!product?.flavors?.length || !window.MobileOptionsSheet) {
-    return;
-  }
-
-  window.MobileOptionsSheet.open({
-    title: product.name,
-    items: product.flavors.map((flavor, index) => ({
-      label: flavor.name,
-      price: `${flavor.price} грн`,
-      active: index === product.activeFlavor,
-      badge: box[boxKey(product.id, index)] || 0,
-    })),
-    onSelect: (index) => {
-      product.activeFlavor = index;
-      render();
-    },
-  });
-}
-
-function selectFlavor(productId, flavorIndex, e) {
-  e.stopPropagation();
-  const product = products.find(p => p.id === productId);
-  product.activeFlavor = flavorIndex;
-  openDropdownId = null;
-  window.MobileOptionsSheet?.close();
-  render();
-}
-
-document.addEventListener("click", () => {
-  if (openDropdownId !== null) {
-    openDropdownId = null;
-    render();
-  }
-});
 
 // === Box map grid HTML ===
 function boxMapHTML() {
@@ -240,57 +180,13 @@ function helperHTML() {
     </div>`;
 }
 
-// === Flavor card HTML (individual card per flavor, used for muffins) ===
-function flavorCardHTML(p, flavorIndex) {
-  const f = p.flavors[flavorIndex];
-  const key = boxKey(p.id, flavorIndex);
-  const inBox = box[key] && box[key] > 0;
-  const qty = box[key] || 0;
-  const canAdd = canAddItem(key);
-  const canIncrement = getRemainingUnits() >= p.units;
-
-  let bottomSection;
-  if (inBox) {
-    const plusDisabled = !canIncrement ? ' product-card__counter-btn--disabled' : '';
-    const plusOnclick = canIncrement ? `onclick="updateQty('${key}', 1)"` : '';
-    bottomSection = `<div class="product-card__counter">
-        <button class="product-card__counter-btn" onclick="updateQty('${key}', -1)">${ICON_MINUS}</button>
-        <span class="product-card__counter-value">${qty}</span>
-        <button class="product-card__counter-btn${plusDisabled}" ${plusOnclick}>${ICON_PLUS}</button>
-      </div>`;
-  } else if (!canAdd) {
-    bottomSection = `<button class="product-card__btn product-card__btn--disabled" disabled>Додати у бокс</button>`;
-  } else {
-    bottomSection = `<button class="product-card__btn" onclick="addToBox('${key}')">Додати у бокс</button>`;
-  }
-
-  return `
-    <div class="product-card" data-id="${p.id}" data-flavor="${flavorIndex}">
-      <div class="product-card__image-wrap">
-        <img class="product-card__image" src="${f.img}" alt="${p.name} ${f.name}">
-      </div>
-      <div class="product-card__name"><a href="#">${p.name} ${f.name}</a><span class="product-card__pcs">${p.pcs} шт</span></div>
-      <div class="product-card__options">
-        <div class="product-card__dropdown">
-          <span class="product-card__weight"></span>
-          <div class="product-card__price-group">
-            <span class="product-card__price">${f.price} грн</span>
-          </div>
-        </div>
-      </div>
-      ${bottomSection}
-    </div>`;
-}
-
 // === Card HTML ===
 function cardHTML(p) {
   const key = currentCardKey(p);
   const inBox = box[key] && box[key] > 0;
   const qty = box[key] || 0;
-  const img = p.flavors ? p.flavors[p.activeFlavor].img : p.img;
-  const price = p.flavors ? p.flavors[p.activeFlavor].price : p.price;
-  const flavorName = p.flavors ? p.flavors[p.activeFlavor].name : null;
-  const isOpen = openDropdownId === p.id;
+  const img = p.img;
+  const price = p.price;
 
   const canAdd = canAddItem(key);
   const canIncrement = getRemainingUnits() >= p.units;
@@ -310,45 +206,19 @@ function cardHTML(p) {
     bottomSection = `<button class="product-card__btn" onclick="addToBox('${key}')">Додати у бокс</button>`;
   }
 
-  let dropdownMenu = '';
-  if (p.flavors && isOpen) {
-    const options = p.flavors.map((f, i) => {
-      if (i === p.activeFlavor) return '';
-      const fKey = boxKey(p.id, i);
-      const fQty = box[fKey] || 0;
-      const badge = fQty > 0 ? `<span class="dropdown-menu__badge">${fQty}</span>` : '';
-      return `
-      <button class="dropdown-menu__item"
-              onclick="selectFlavor(${p.id}, ${i}, event)">
-        <span class="dropdown-menu__flavor">${f.name}${badge}</span>
-        <span class="dropdown-menu__price">${f.price} грн</span>
-      </button>`;
-    }).join('');
-    dropdownMenu = `<div class="dropdown-menu">${options}</div>`;
-  }
-
   return `
-    <div class="product-card" data-id="${p.id}">
+    <div class="product-card product-card--without-dropdown" data-id="${p.id}">
       <div class="product-card__image-wrap">
         <img class="product-card__image" src="${img}" alt="${p.name}">
       </div>
-      <div class="product-card__name"><a href="#">${p.name}</a><span class="product-card__pcs">${p.pcs} шт</span></div>
-      <div class="product-card__options">
-        <div class="product-card__dropdown-wrap">
-          <div class="product-card__dropdown ${p.flavors ? 'product-card__dropdown--clickable' : ''} ${isOpen ? 'product-card__dropdown--open' : ''}"
-               ${p.flavors ? `onclick="toggleDropdown(${p.id}, event)"` : ''}>
-            <div class="product-card__dropdown-head">
-              <span class="product-card__weight" title="${flavorName || ''}">${flavorName || ''}</span>
-              <div class="product-card__price-group">
-                <span class="product-card__price">${price} грн</span>
-                ${p.flavors ? `<img class="product-card__caret ${isOpen ? 'product-card__caret--open' : ''}" src="icons/caret-big-down-filled.svg" alt="">` : ''}
-              </div>
-            </div>
-          </div>
-          ${dropdownMenu}
+      <div class="product-card__body product-card__body--without-dropdown">
+        <div class="product-card__name"><a href="#">${p.name}</a></div>
+        <div class="product-card__meta">
+          <span class="product-card__meta-label">FP · ${p.pcs} шт</span>
+          <span class="product-card__meta-price">${price} грн</span>
         </div>
+        ${bottomSection}
       </div>
-      ${bottomSection}
     </div>`;
 }
 
@@ -386,23 +256,7 @@ function render() {
   // Render product grid
   const grid = document.getElementById("productGrid");
   const filtered = getFilteredProducts();
-
-  if (activeCategory === "donuts" || activeCategory === "muffins") {
-    // Each flavor as a separate card
-    let cards = '';
-    filtered.forEach(p => {
-      if (p.flavors) {
-        p.flavors.forEach((f, i) => {
-          cards += flavorCardHTML(p, i);
-        });
-      } else {
-        cards += cardHTML(p);
-      }
-    });
-    grid.innerHTML = cards;
-  } else {
-    grid.innerHTML = filtered.map(cardHTML).join("");
-  }
+  grid.innerHTML = filtered.map(cardHTML).join("");
 
   // Render full sidebar
   const sidebar = document.getElementById("boxSidebar");

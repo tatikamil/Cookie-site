@@ -89,7 +89,7 @@ function cardHTML(p) {
   }
 
   return `
-    <div class="product-card" data-sub="${p.sub || ''}">
+    <div class="product-card product-card--with-dropdown" data-sub="${p.sub || ''}">
       <div class="product-card__image-wrap">
         <img class="product-card__image" src="${p.img}" alt="${p.name}">
       </div>

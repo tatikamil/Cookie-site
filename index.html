@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Наш смак — Печиво</title>
+  <title>Наш смак</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Roboto+Condensed:wght@400;700&family=Rubik:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-catalog-scope="classic,sandwich" data-promos="true" data-initial-filter="all">
+<body class="home-page">
 
-  <!-- Overlay -->
   <div class="overlay">
     <span>Безкоштовна доставка від 1000 грн 🍩🍪</span>
   </div>
 
-  <!-- Header -->
+  <section class="home-hero" aria-label="Головний банер">
+    <img src="images/hero image.png" alt="Великодній бокс Наш смак">
+  </section>
+
   <header class="header">
     <div class="header__logo">
       <a href="index.html"><img src="images/logo.svg" alt="Наш смак"></a>
     </div>
     <nav class="header__categories">
-      <a href="index.html" class="header__cat-tab header__cat-tab--active">Печиво</a>
+      <a href="pechuvo.html" class="header__cat-tab">Печиво</a>
       <a href="muffins-donuts.html" class="header__cat-tab">Мафіни & Донати</a>
       <button class="header__cat-tab">Набори</button>
       <a href="box-builder.html" class="header__cat-tab header__cat-tab--box">Зібрати бокс</a>
@@ -52,7 +54,6 @@
     </div>
   </header>
 
-  <!-- Mobile menu -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <div class="mobile-menu">
       <div class="mobile-menu__header">
@@ -71,7 +72,7 @@
         <a href="#" class="mobile-menu__link">
           <img src="icons/account.svg" width="20" height="20" alt=""> Акаунт
         </a>
-        <a href="index.html" class="mobile-menu__link mobile-menu__link--highlight" aria-current="page">Печиво</a>
+        <a href="pechuvo.html" class="mobile-menu__link">Печиво</a>
         <a href="muffins-donuts.html" class="mobile-menu__link">Мафіни & Донати</a>
         <a href="box-builder.html" class="mobile-menu__link">Зібрати бокс</a>
         <a href="#" class="mobile-menu__link">Про нас</a>
@@ -80,20 +81,252 @@
     </div>
   </div>
 
-  <main class="main">
-    <!-- Subcategory pills -->
-    <div class="subcategories">
-      <button class="pill pill--active" data-filter="all">Все печиво</button>
-      <button class="pill" data-filter="sandwich">сендвіч</button>
-      <button class="pill" data-filter="classic">класичне</button>
+  <main class="main home-main">
+    <section class="home-section home-section--catalog-preview" aria-labelledby="newArrivalsTitle">
+      <div class="home-section__label-wrap">
+        <h2 class="home-section__label" id="newArrivalsTitle">Новинки</h2>
+      </div>
+      <div class="home-section__content">
+        <div class="home-new-grid">
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/donut-velykodniy.png" alt="Донат Великодній">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Донат "Великодній"</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">LF · 900 г</span>
+                <span class="home-product-card__price">260 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/zavytushka-cinamon.png" alt="Завитушка Сінамон">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Завитушка Сінамон</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">L · 900 г</span>
+                <span class="home-product-card__price">206 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/mafin-velykodniy2.png" alt="Мафін Великодній">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Мафін "Великодній"</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">LF · 900 г</span>
+                <span class="home-product-card__price">260 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/amerikano-drops.png" alt="Американо дропс">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Американо дропс</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">L · 800 г</span>
+                <span class="home-product-card__price">178 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/donut-velykodniy.png" alt="Донат Великодній">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Донат "Великодній"</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">LF · 900 г</span>
+                <span class="home-product-card__price">260 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/zavytushka-cinamon.png" alt="Завитушка Сінамон">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Завитушка Сінамон</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">L · 900 г</span>
+                <span class="home-product-card__price">206 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/mafin-velykodniy2.png" alt="Мафін Великодній">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Мафін "Великодній"</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">LF · 900 г</span>
+                <span class="home-product-card__price">260 грн</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="home-product-card">
+            <div class="home-product-card__image-wrap">
+              <img class="home-product-card__image" src="images/amerikano-drops.png" alt="Американо дропс">
+            </div>
+            <div class="home-product-card__body">
+              <h3 class="home-product-card__title">Американо дропс</h3>
+              <div class="home-product-card__meta">
+                <span class="home-product-card__label">L · 800 г</span>
+                <span class="home-product-card__price">178 грн</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="home-feature-stack">
+      <section class="home-feature home-feature--factory">
+        <div class="home-feature__media home-feature__media--video">
+          <video src="images/about.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="home-feature__copy">
+          <img class="home-feature__flower home-feature__flower--top" src="images/flover1.png" alt="">
+          <h2 class="home-feature__title">Свіженьке,<br>прям з фабрики</h2>
+          <p class="home-feature__text">Ми знаємо, яким має бути справжнє печиво. Використовуємо лише якісні інгредієнти, ретельно контролюємо всі процеси та піклуємось, щоб вам смакувало.</p>
+          <a href="#" class="home-secondary-btn">Більше про нас</a>
+        </div>
+      </section>
+
+      <section class="home-feature home-feature--event">
+        <div class="home-feature__copy home-feature__copy--compact">
+          <img class="home-feature__flower home-feature__flower--side" src="images/flover2.png" alt="">
+          <h2 class="home-feature__title home-feature__title--small">Організовуєш захід?</h2>
+          <p class="home-feature__text">Допоможемо підібрати ласощі для великої компанії. Тільки скажи.</p>
+          <a href="#" class="home-secondary-btn">Замовити</a>
+        </div>
+        <div class="home-feature__media">
+          <img src="images/zahid.png" alt="Організовуєш захід">
+        </div>
+      </section>
+
+      <section class="home-feature home-feature--box">
+        <div class="home-feature__media">
+          <img src="images/box-image.png" alt="Збери свій бокс">
+        </div>
+        <div class="home-feature__copy home-feature__copy--compact">
+          <img class="home-feature__flower home-feature__flower--bottom" src="images/flover3.png" alt="">
+          <h2 class="home-feature__title home-feature__title--small">Збери свій бокс</h2>
+          <p class="home-feature__text">Шукаєш щось особливе? Тоді тобі сюди. Ми навіть підпишемо від тебе листівочку.</p>
+          <a href="box-builder.html" class="home-secondary-btn">Зібрати свій бокс</a>
+        </div>
+      </section>
     </div>
 
-    <!-- Product grid -->
-    <div class="product-grid" id="productGrid"></div>
+    <section class="home-weight" aria-label="Як обрати розмір коробки">
+      <picture>
+        <source media="(max-width: 767px)" srcset="images/Weight-sizes-vertical.png">
+        <img src="images/Weight sizes.png" alt="Як обрати розмір коробки">
+      </picture>
+    </section>
+
+    <section class="home-section home-section--reviews" aria-labelledby="dailyMomentsTitle">
+      <div class="home-section__label-wrap">
+        <h2 class="home-section__label" id="dailyMomentsTitle">Наші будні</h2>
+      </div>
+      <div class="home-section__content">
+        <div class="home-reviews-grid">
+          <article class="home-review-card"><img src="images/review1.png" alt="Відгуки клієнтів"></article>
+          <article class="home-review-card"><img src="images/review2.png" alt="Команда Наш смак"></article>
+          <article class="home-review-card"><img src="images/review3.png" alt="Сторіз з печивом"></article>
+          <article class="home-review-card"><img src="images/review4.png" alt="Команда з подарунковими боксами"></article>
+          <article class="home-review-card"><img src="images/review1.png" alt="Відгуки клієнтів"></article>
+          <article class="home-review-card"><img src="images/review2.png" alt="Команда Наш смак"></article>
+          <article class="home-review-card"><img src="images/review3.png" alt="Сторіз з печивом"></article>
+          <article class="home-review-card"><img src="images/review4.png" alt="Команда з подарунковими боксами"></article>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="products-data.js"></script>
-  <script src="app.js"></script>
+  <footer class="home-footer">
+    <div class="home-footer__inner">
+      <div class="home-footer__brand">
+        <a class="home-footer__logo" href="index.html"><img src="images/logo.svg" alt="Наш смак"></a>
+        <p class="home-footer__copyright">© 2025. Наш смак Всі права захищено</p>
+      </div>
+
+      <div class="home-footer__columns">
+        <div class="home-footer__column">
+          <h3 class="home-footer__heading">Онлайн крамниця</h3>
+          <a href="pechuvo.html">Новинки</a>
+          <a href="pechuvo.html">Без начинки</a>
+          <a href="pechuvo.html">З начинкою</a>
+          <a href="pechuvo.html">Глазуроване</a>
+          <a href="muffins-donuts.html">Бісквіти</a>
+          <a href="#">Набори</a>
+          <a href="box-builder.html">До посту</a>
+        </div>
+
+        <div class="home-footer__column">
+          <h3 class="home-footer__heading">Про нас</h3>
+          <a href="#">Вакансії</a>
+          <a href="#">Питання та відповіді</a>
+          <a href="#">Контакти</a>
+          <a href="#">Співпраця</a>
+          <a href="#">B2B</a>
+          <a href="#">Політика конфіденційності</a>
+          <a href="#">Публічна оферта</a>
+          <a href="#">Доставка та оплата</a>
+          <a href="#">Повернення та обмін</a>
+        </div>
+
+        <div class="home-footer__column home-footer__column--contact">
+          <div class="home-footer__schedule">
+            <h3 class="home-footer__heading">Графік роботи</h3>
+            <p>8:00 – 17:00 пн-пт</p>
+          </div>
+
+          <div class="home-footer__socials">
+            <h3 class="home-footer__heading">Ми у соцмережах</h3>
+            <div class="home-footer__social-links">
+              <a href="#" aria-label="Instagram"><img src="icons/Instagram.svg" alt=""></a>
+              <a href="#" aria-label="Facebook"><img src="icons/Facebook NashSmak.svg" alt=""></a>
+              <a href="#" aria-label="TikTok"><img src="icons/Tiktok NashSmak.svg" alt=""></a>
+              <a href="#" aria-label="Pinterest"><img src="icons/Pinterest NashSmak.svg" alt=""></a>
+            </div>
+            <div class="home-footer__payments">
+              <img src="icons/Visa.svg" alt="Visa">
+              <img src="icons/Mastercard.svg" alt="Mastercard">
+            </div>
+          </div>
+
+          <div class="home-footer__details">
+            <p>За додатковою інформацією звертайтесь:</p>
+            <p>Контактний телефон: +38 067 675 02 89</p>
+            <p>Email: shopnashsmak@gmail.com</p>
+          </div>
+
+          <div class="home-footer__address">
+            <p>Адреса: 13133, Старий Любар,</p>
+            <p>Житомирський район, Житомирська</p>
+            <p>область, вулиця Перемоги, 3</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script src="responsive.js"></script>
 </body>
 </html>

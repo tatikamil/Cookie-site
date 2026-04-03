@@ -313,11 +313,12 @@ window.PRODUCTS_DATA = [
       cardTitle: "Завитушки",
       flavorOptions: [
         { id: "arahis-zgushchenka", label: "арахіс та згущене молоко", image: "images/zavytushka-arahis.png", pcs: 2, units: 5, price: 16 },
+        { id: "zgushchene-moloko", label: "згущене молоко", image: "images/zavytushka-zgushenka.png", pcs: 2, units: 5, price: 16 },
+        { id: "priazhene-moloko", label: "пряжене молоко", image: "images/zavytushka-moloko.png", pcs: 2, units: 5, price: 16 },
+        { id: "mak-zgushchene-moloko", label: "мак та згущене молоко", image: "images/zavytushka-mak.png", pcs: 2, units: 5, price: 16 },
+        { id: "synamon", label: "синамон", image: "images/zavytushka-cinamon.png", pcs: 2, units: 5, price: 16 },
         { id: "shokolad", label: "шоколад", image: "images/zavytushka-choko.png", pcs: 2, units: 5, price: 16 },
-        { id: "tsukor", label: "цукор", image: "images/zavytushka-tsukor.png", pcs: 2, units: 5, price: 16 },
         { id: "jabluko", label: "яблуко", image: "images/zavytushka-jabluko.png", pcs: 2, units: 5, price: 16 },
-        { id: "moloko", label: "молоко", image: "images/zavytushka-moloko.png", pcs: 2, units: 5, price: 16 },
-        { id: "korytsia", label: "кориця", image: "images/zavytushka-cinamon.png", pcs: 2, units: 5, price: 16 },
       ],
     },
   },
@@ -690,6 +691,33 @@ window.getCatalogProducts = function getCatalogProducts() {
   );
 };
 
+function normalizeFlavorText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/['’`"]/g, "")
+    .replace(/[-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function findMatchingFlavorOption(catalogItem, flavorOptions, usedIndexes) {
+  const availableOptions = flavorOptions
+    .map((option, index) => ({ option, index }))
+    .filter(({ index }) => !usedIndexes.has(index));
+
+  const imageMatch = availableOptions.find(({ option }) => option.image === catalogItem.image);
+  if (imageMatch) {
+    return imageMatch;
+  }
+
+  const normalizedTitle = normalizeFlavorText(catalogItem.cardTitle);
+  const labelMatch = availableOptions.find(({ option }) =>
+    normalizedTitle.includes(normalizeFlavorText(option.label))
+  );
+
+  return labelMatch || availableOptions[0] || null;
+}
+
 window.getBoxBuilderProducts = function getBoxBuilderProducts() {
   let idCounter = 1;
 
@@ -701,21 +729,30 @@ window.getBoxBuilderProducts = function getBoxBuilderProducts() {
     }
 
     if (item.flavorOptions?.length) {
-      const [firstFlavor] = item.flavorOptions;
+      const usedIndexes = new Set();
 
-      return [{
-        id: idCounter++,
-        category: product.category,
-        name: item.cardTitle,
-        pcs: firstFlavor.pcs,
-        units: firstFlavor.units,
-        flavors: item.flavorOptions.map((flavor) => ({
-          name: flavor.label,
-          price: flavor.price,
-          img: flavor.image,
-        })),
-        activeFlavor: 0,
-      }];
+      return product.catalogItems
+        .map((catalogItem) => {
+          const match = findMatchingFlavorOption(catalogItem, item.flavorOptions, usedIndexes);
+
+          if (!match) {
+            return null;
+          }
+
+          usedIndexes.add(match.index);
+
+          return {
+            id: idCounter++,
+            category: product.category,
+            name: catalogItem.cardTitle,
+            pcs: match.option.pcs,
+            units: match.option.units,
+            price: match.option.price,
+            img: match.option.image,
+            flavors: null,
+          };
+        })
+        .filter(Boolean);
     }
 
     return [{
