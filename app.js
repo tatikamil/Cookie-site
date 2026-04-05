@@ -6,9 +6,17 @@ const products = window.getCatalogProducts()
   .filter((product) => !catalogScope.length || catalogScope.includes(product.sub));
 const catalogPromos = window.CATALOG_PROMOS || {};
 const selectedPackById = {};
+const productOrder = new Map(products.map((product, index) => [String(product.id), index]));
 let openPackDropdownId = null;
+let activeSort = "default";
 const enablePromos = document.body.dataset.promos === "true";
 const initialFilter = document.body.dataset.initialFilter || "all";
+const SORT_OPTIONS = [
+  { value: "default", label: "За замовчуванням" },
+  { value: "popular", label: "За популярністю" },
+  { value: "price-asc", label: "За зростанням ціни" },
+  { value: "price-desc", label: "За спаданням ціни" },
+];
 
 function isMobileViewport() {
   return window.matchMedia("(max-width: 767px)").matches;
@@ -60,6 +68,115 @@ function selectPack(productId, packIndex, event) {
 
 function getActiveFilter() {
   return document.querySelector(".pill--active")?.dataset.filter || "all";
+}
+
+function getPriceValue(value) {
+  if (typeof value === "number") {
+    return value;
+  }
+
+  const normalized = Number(String(value || "").replace(/[^\d.,]/g, "").replace(",", "."));
+  return Number.isFinite(normalized) ? normalized : 0;
+}
+
+function getProductPrice(product) {
+  const selectedPack = getSelectedPack(product);
+  if (selectedPack?.price != null) {
+    return getPriceValue(selectedPack.price);
+  }
+  return getPriceValue(product.price);
+}
+
+function sortProducts(list) {
+  const sorted = list.slice();
+
+  if (activeSort === "default" || activeSort === "popular") {
+    return sorted.sort((a, b) => (productOrder.get(String(a.id)) || 0) - (productOrder.get(String(b.id)) || 0));
+  }
+
+  sorted.sort((a, b) => {
+    const diff = getProductPrice(a) - getProductPrice(b);
+    if (diff !== 0) {
+      return activeSort === "price-asc" ? diff : -diff;
+    }
+    return (productOrder.get(String(a.id)) || 0) - (productOrder.get(String(b.id)) || 0);
+  });
+
+  return sorted;
+}
+
+function updateSortUI() {
+  const labelNode = document.querySelector("[data-sort-label]");
+  const sortButton = document.querySelector("[data-sort-button]");
+  const sortMenu = document.querySelector("[data-sort-menu]");
+  const currentOption = SORT_OPTIONS.find((option) => option.value === activeSort) || SORT_OPTIONS[0];
+
+  if (labelNode) {
+    labelNode.textContent = currentOption.label;
+  }
+
+  document.querySelectorAll("[data-sort-value]").forEach((button) => {
+    button.classList.toggle("sort-control__option--active", button.dataset.sortValue === activeSort);
+  });
+
+  if (sortButton && sortMenu?.hidden) {
+    sortButton.setAttribute("aria-expanded", "false");
+    sortButton.classList.remove("is-open");
+  }
+}
+
+function closeSortMenu() {
+  const sortButton = document.querySelector("[data-sort-button]");
+  const sortMenu = document.querySelector("[data-sort-menu]");
+  if (!sortMenu) return;
+  sortMenu.hidden = true;
+  if (sortButton) {
+    sortButton.setAttribute("aria-expanded", "false");
+    sortButton.classList.remove("is-open");
+  }
+}
+
+function openSortMobileSheet() {
+  if (!window.MobileOptionsSheet) return;
+
+  window.MobileOptionsSheet.open({
+    title: "Сортувати",
+    items: SORT_OPTIONS.map((option) => ({
+      label: option.label,
+      active: option.value === activeSort,
+    })),
+    onSelect: (index) => {
+      activeSort = SORT_OPTIONS[index]?.value || "default";
+      updateSortUI();
+      render(getActiveFilter());
+    },
+  });
+}
+
+function toggleSortMenu(event) {
+  event.stopPropagation();
+
+  if (isMobileViewport()) {
+    openSortMobileSheet();
+    return;
+  }
+
+  const sortButton = document.querySelector("[data-sort-button]");
+  const sortMenu = document.querySelector("[data-sort-menu]");
+  if (!sortButton || !sortMenu) return;
+
+  const willOpen = sortMenu.hidden;
+  sortMenu.hidden = !willOpen;
+  sortButton.setAttribute("aria-expanded", willOpen ? "true" : "false");
+  sortButton.classList.toggle("is-open", willOpen);
+}
+
+function selectSort(sortValue, event) {
+  event.stopPropagation();
+  activeSort = sortValue;
+  closeSortMenu();
+  updateSortUI();
+  render(getActiveFilter());
 }
 
 // === Card HTML ===
@@ -128,7 +245,7 @@ function promoCardHTML(promo) {
 // === Render ===
 function render(filter) {
   const grid = document.getElementById("productGrid");
-  const list = filter === "all" ? products : products.filter(p => p.sub === filter);
+  const list = sortProducts(filter === "all" ? products : products.filter((p) => p.sub === filter));
   const cards = list.map(cardHTML);
   const promos = enablePromos ? (catalogPromos[filter] || []) : [];
 
@@ -145,17 +262,27 @@ document.addEventListener("click", () => {
     openPackDropdownId = null;
     render(getActiveFilter());
   }
+  closeSortMenu();
 });
 
 // === Pill filtering ===
-document.querySelectorAll(".pill").forEach(pill => {
+document.querySelectorAll(".pill[data-filter]").forEach(pill => {
   pill.addEventListener("click", () => {
-    document.querySelectorAll(".pill").forEach(p => p.classList.remove("pill--active"));
+    document.querySelectorAll(".pill[data-filter]").forEach(p => p.classList.remove("pill--active"));
     pill.classList.add("pill--active");
     openPackDropdownId = null;
+    closeSortMenu();
     render(pill.dataset.filter);
   });
 });
 
+document.querySelector("[data-sort-button]")?.addEventListener("click", toggleSortMenu);
+document.querySelectorAll("[data-sort-value]").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    selectSort(button.dataset.sortValue || "default", event);
+  });
+});
+
 // === Init ===
+updateSortUI();
 render(initialFilter);

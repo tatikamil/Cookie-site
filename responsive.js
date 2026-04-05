@@ -112,10 +112,11 @@
     listNode.innerHTML = (config.items || []).map(function (item, index) {
       const activeClass = item.active ? ' mobile-options-sheet__item--active' : '';
       const badge = item.badge ? `<span class="mobile-options-sheet__badge">${item.badge}</span>` : '';
+      const price = item.price ? `<span class="mobile-options-sheet__item-price">${item.price}</span>` : '';
       return `
         <button class="mobile-options-sheet__item${activeClass}" type="button" data-index="${index}">
           <span class="mobile-options-sheet__item-label" title="${item.label}">${item.label}${badge}</span>
-          <span class="mobile-options-sheet__item-price">${item.price}</span>
+          ${price}
         </button>
       `;
     }).join('');

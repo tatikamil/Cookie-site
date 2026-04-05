@@ -20,9 +20,8 @@
     </div>
     <nav class="header__categories">
       <a href="pechuvo.html" class="header__cat-tab header__cat-tab--active">Печиво</a>
-      <a href="muffins-donuts.html" class="header__cat-tab">Мафіни & Донати</a>
-      <button class="header__cat-tab">Набори</button>
-      <a href="box-builder.html" class="header__cat-tab header__cat-tab--box">Зібрати бокс</a>
+      <a href="muffins-donuts.html" class="header__cat-tab">Мафіни і Донати</a>
+      <a href="nabory.html" class="header__cat-tab">Набори</a>
     </nav>
 
     <div class="header__right">
@@ -69,8 +68,8 @@
           <img src="icons/account.svg" width="20" height="20" alt=""> Акаунт
         </a>
         <a href="pechuvo.html" class="mobile-menu__link mobile-menu__link--highlight" aria-current="page">Печиво</a>
-        <a href="muffins-donuts.html" class="mobile-menu__link">Мафіни & Донати</a>
-        <a href="box-builder.html" class="mobile-menu__link">Зібрати бокс</a>
+        <a href="muffins-donuts.html" class="mobile-menu__link">Мафіни і Донати</a>
+        <a href="nabory.html" class="mobile-menu__link">Набори</a>
         <a href="#" class="mobile-menu__link">Про нас</a>
         <a href="#" class="mobile-menu__link">B2B</a>
       </nav>
@@ -78,10 +77,25 @@
   </div>
 
   <main class="main">
-    <div class="subcategories">
-      <button class="pill pill--active" data-filter="all">Все печиво</button>
-      <button class="pill" data-filter="sandwich">сендвіч</button>
-      <button class="pill" data-filter="classic">класичне</button>
+    <div class="catalog-toolbar">
+      <div class="subcategories">
+        <button class="pill pill--active" data-filter="all">Все печиво</button>
+        <button class="pill" data-filter="sandwich">сендвіч</button>
+        <button class="pill" data-filter="classic">класичне</button>
+      </div>
+      <div class="sort-control" data-sort-control>
+        <button class="sort-control__button" type="button" data-sort-button aria-haspopup="menu" aria-expanded="false" aria-label="Сортувати">
+          <span class="sort-control__button-label" data-sort-label>За замовчуванням</span>
+          <img class="sort-control__button-caret" src="icons/caret-big-down-filled.svg" width="24" height="24" alt="">
+          <img class="sort-control__button-icon" src="icons/sort.svg" width="24" height="24" alt="">
+        </button>
+        <div class="sort-control__menu" data-sort-menu hidden>
+          <button class="sort-control__option sort-control__option--active" type="button" data-sort-value="default">За замовчуванням</button>
+          <button class="sort-control__option" type="button" data-sort-value="popular">За популярністю</button>
+          <button class="sort-control__option" type="button" data-sort-value="price-asc">За зростанням ціни</button>
+          <button class="sort-control__option" type="button" data-sort-value="price-desc">За спаданням ціни</button>
+        </div>
+      </div>
     </div>
 
     <div class="product-grid" id="productGrid"></div>

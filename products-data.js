@@ -6,6 +6,107 @@ window.DEFAULT_PLP_PACK_OPTIONS = [
   { label: "XXL · 2 кг", price: 505 },
 ];
 
+window.SETS_DATA = [
+  {
+    id: "box-velykodnii",
+    category: "boxes",
+    name: "Великодній",
+    weight: "BF · 1,5 кг",
+    price: "800 грн",
+    img: "images/box-velykodniy.png",
+  },
+  {
+    id: "box-donut-mix-v-glazuri",
+    category: "boxes",
+    name: "Донат мікс в глазурі",
+    weight: "BF · 2,3 кг",
+    price: "850 грн",
+    img: "images/Box-donut-mix-v-glazuri.png",
+  },
+  {
+    id: "box-donut-mix",
+    category: "boxes",
+    name: "Донат мікс",
+    weight: "BF · 2,3 кг",
+    price: "850 грн",
+    img: "images/box-donutmix.png",
+  },
+  {
+    id: "box-mafin-mix",
+    category: "boxes",
+    name: "Мафін мікс",
+    weight: "BF · 1,174 кг",
+    price: "500 грн",
+    img: "images/Box-mafin-mix.png",
+  },
+  {
+    id: "box-znaiomstvo",
+    category: "boxes",
+    name: "Знайомство",
+    weight: "BF · 1,45 кг",
+    price: "450 грн",
+    img: "images/Box-znayomstvo.png",
+  },
+  {
+    id: "box-klasychnyi",
+    category: "boxes",
+    name: "Класичний",
+    weight: "BF · 1,45 кг",
+    price: "450 грн",
+    img: "images/Box-klasychnyi.png",
+  },
+  {
+    id: "box-fruktovyi",
+    category: "boxes",
+    name: "Фруктовий",
+    weight: "BF · 1,6 кг",
+    price: "450 грн",
+    img: "images/Box-fruktovyi.png",
+  },
+  {
+    id: "asorti-donat",
+    category: "assorti",
+    name: "Асорті Донат",
+    weight: "LF · 800 г",
+    price: "190 грн",
+    img: "images/asorti-donut.png",
+  },
+  {
+    id: "asorti-zavytushky",
+    category: "assorti",
+    name: "Асорті Завитушки",
+    img: "images/asorti-zavytushki.png",
+    packOptions: [
+      { label: "LF · 800 г", price: 200 },
+      { label: "L · 800 г", price: 185 },
+    ],
+  },
+  {
+    id: "asorti-malibu",
+    category: "assorti",
+    name: "Асорті Малібу",
+    weight: "L · 1 кг",
+    price: "200 грн",
+    img: "images/asorti-malibu.png",
+  },
+  {
+    id: "asorti-nova-praha",
+    category: "assorti",
+    name: "Асорті Нова Прага",
+    weight: "L · 1 кг",
+    price: "210 грн",
+    img: "images/asorti-nova-praha.png",
+  },
+  {
+    id: "asorti-pisochne",
+    category: "assorti",
+    name: "Асорті Пісочне",
+    weight: "L · 1 кг",
+    price: "170 грн",
+    img: "images/asorti-fruktove.png",
+  },
+];
+
 window.PRODUCTS_DATA = [
   {
     id: "amerikano",
@@ -16,6 +117,13 @@ window.PRODUCTS_DATA = [
         id: "amerikano-drops",
         cardTitle: "Американо дропс",
         image: "images/amerikano-drops.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 800 г", price: 178 }],
+      },
+      {
+        id: "amerikano-rodzynky",
+        cardTitle: "Американо родзинки",
+        image: "images/amerikano-rodzynky.png",
         subcategory: "classic",
         packOptions: [{ label: "L · 800 г", price: 178 }],
       },
@@ -103,6 +211,13 @@ window.PRODUCTS_DATA = [
         subcategory: "classic",
         packOptions: [{ label: "L · 1 кг", price: 174 }],
       },
+      {
+        id: "kvatro-mak",
+        cardTitle: "Кватро мак",
+        image: "images/kvatro-mak.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 1 кг", price: 174 }],
+      },
     ],
     boxBuilderItem: {
       cardTitle: "Кватро",
@@ -121,6 +236,27 @@ window.PRODUCTS_DATA = [
         id: "dzhemka-abrykos",
         cardTitle: "Джемка абрикос",
         image: "images/dzhemka-abrykos.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 100 }],
+      },
+      {
+        id: "dzhemka-jabluko",
+        cardTitle: "Джемка яблуко",
+        image: "images/dzhemka-jabluko.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 100 }],
+      },
+      {
+        id: "dzhemka-polunytsia",
+        cardTitle: "Джемка полуниця",
+        image: "images/dzhemka-polunytsia.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 100 }],
+      },
+      {
+        id: "dzhemka-vyshnia",
+        cardTitle: "Джемка вишня",
+        image: "images/dzhemka-vyshnia.png",
         subcategory: "classic",
         packOptions: [{ label: "L · 900 г", price: 100 }],
       },
@@ -295,8 +431,22 @@ window.PRODUCTS_DATA = [
         packOptions: [{ label: "L · 900 г", price: 206 }],
       },
       {
+        id: "zavytushka-korytsia",
+        cardTitle: "Завитушка кориця",
+        image: "images/zavytushka-korytsia.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 206 }],
+      },
+      {
+        id: "zavytushka-tsukor",
+        cardTitle: "Завитушка цукор",
+        image: "images/zavytushka-tsukor.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 206 }],
+      },
+      {
         id: "zavytushka-shokolad",
-        cardTitle: "Завитушка шоколад",
+        cardTitle: "Завитушка шоко",
         image: "images/zavytushka-choko.png",
         subcategory: "sandwich",
         packOptions: [{ label: "L · 900 г", price: 198 }],
@@ -414,14 +564,51 @@ window.PRODUCTS_DATA = [
     id: "frutiko",
     title: "Фрутіко",
     category: "sandwich",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "frutiko-shoko-vyshnia",
+        cardTitle: "Фрутіко шоко-вишня",
+        image: "images/frutiko-choko.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 170 }],
+      },
+      {
+        id: "frutiko-vyshnia",
+        cardTitle: "Фрутіко вишня",
+        image: "images/frutiko-vyshnia.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 160 }],
+      },
+      {
+        id: "frutiko-polunytsia",
+        cardTitle: "Фрутіко полуниця",
+        image: "images/frutiko-polynytsia.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 160 }],
+      },
+      {
+        id: "frutiko-persyk",
+        cardTitle: "Фрутіко персик",
+        image: "images/frutiko-persyk.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 160 }],
+      },
+      {
+        id: "frutiko-abrykos",
+        cardTitle: "Фрутіко абрикос",
+        image: "images/frutiko-abrykos.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 160 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Фрутіко",
       flavorOptions: [
         { id: "shoko-vyshnia", label: "шоко-вишня", image: "images/frutiko-vyshnia.png", pcs: 4, units: 5, price: 16 },
-        { id: "abrykos", label: "абрикос", image: "images/frutiko-abrykos.png", pcs: 4, units: 5, price: 16 },
-        { id: "shokolad", label: "шоколад", image: "images/frutiko-choko.png", pcs: 4, units: 5, price: 16 },
+        { id: "vyshnia", label: "вишня", image: "images/frutiko-vyshnia.png", pcs: 4, units: 5, price: 16 },
         { id: "polunytsia", label: "полуниця", image: "images/frutiko-polynytsia.png", pcs: 4, units: 5, price: 16 },
+        { id: "persyk", label: "персик", image: "images/frutiko-persyk.png", pcs: 4, units: 5, price: 16 },
+        { id: "abrykos", label: "абрикос", image: "images/frutiko-abrykos.png", pcs: 4, units: 5, price: 16 },
       ],
     },
   },
@@ -429,12 +616,35 @@ window.PRODUCTS_DATA = [
     id: "duetto",
     title: "Дуетто",
     category: "sandwich",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "duetto-kreme-polunytsia",
+        cardTitle: "Дуетто креме-полуниця",
+        image: "images/duetto-polunytsia.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 184 }],
+      },
+      {
+        id: "duetto-kreme-abrykos",
+        cardTitle: "Дуетто креме-абрикос",
+        image: "images/duetto-abrykos.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 180 }],
+      },
+      {
+        id: "duetto-dabl-krem",
+        cardTitle: "Дуетто дабл крем",
+        image: "images/duetto-doblecreme.png",
+        subcategory: "sandwich",
+        packOptions: [{ label: "L · 1 кг", price: 184 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Дуетто",
       flavorOptions: [
-        { id: "dabl-krem", label: "дабл-крем", image: "images/duetto-doblecreme.png", pcs: 4, units: 5, price: 17 },
-        { id: "polunytsia", label: "полуниця", image: "images/duetto-polunytsia.png", pcs: 4, units: 5, price: 17 },
+        { id: "kreme-polunytsia", label: "креме-полуниця", image: "images/duetto-polunytsia.png", pcs: 4, units: 5, price: 17 },
+        { id: "kreme-abrykos", label: "креме-абрикос", image: "images/duetto-abrykos.png", pcs: 4, units: 5, price: 17 },
+        { id: "dabl-krem", label: "дабл крем", image: "images/duetto-doblecreme.png", pcs: 4, units: 5, price: 17 },
       ],
     },
   },
@@ -442,7 +652,15 @@ window.PRODUCTS_DATA = [
     id: "nasoloda",
     title: "Насолода",
     category: "classic",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "nasoloda",
+        cardTitle: "Насолода",
+        image: "images/nasoloda.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 105 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Насолода",
       image: "images/nasoloda.png",
@@ -455,7 +673,15 @@ window.PRODUCTS_DATA = [
     id: "zabava",
     title: "Забава",
     category: "classic",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "zabava",
+        cardTitle: "Забава",
+        image: "images/zabava.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 148 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Забава",
       image: "images/zabava.png",
@@ -468,7 +694,15 @@ window.PRODUCTS_DATA = [
     id: "zadavaka",
     title: "Задавака",
     category: "classic",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "zadavaka",
+        cardTitle: "Задавака",
+        image: "images/zadavaka.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 148 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Задавака",
       image: "images/zadavaka.png",
@@ -481,7 +715,15 @@ window.PRODUCTS_DATA = [
     id: "bilochka-glazur",
     title: "Білочка в глазурі",
     category: "classic",
-    catalogItems: [],
+    catalogItems: [
+      {
+        id: "bilochka-glazur",
+        cardTitle: "Білочка в глазурі",
+        image: "images/bilochka-glazur.png",
+        subcategory: "classic",
+        packOptions: [{ label: "L · 900 г", price: 342 }],
+      },
+    ],
     boxBuilderItem: {
       cardTitle: "Білочка в глазурі",
       image: "images/bilochka-glazur.png",
@@ -648,11 +890,21 @@ window.PRODUCTS_DATA = [
 ];
 
 window.CATALOG_PROMOS = {
+  all: [
+    {
+      insertAfter: 31,
+      title: "Збери свій бокс",
+      description: "як хочеться саме тобі.<br>А ми додамо листівочку<br>з твоїм текстом",
+      href: "box-builder.html",
+      desktopLabel: "Зібрати свій бокс",
+      mobileLabel: "Зібрати бокс",
+    },
+  ],
   sandwich: [
     {
       insertAfter: 3,
       title: "Збери свій бокс",
-      description: "Шукаєш особливий подарунок? Тоді тобі сюди. Ми навіть підпишемо від тебе листівочку",
+      description: "як хочеться саме тобі.<br>А ми додамо листівочку<br>з твоїм текстом",
       href: "box-builder.html",
       desktopLabel: "Зібрати свій бокс",
       mobileLabel: "Зібрати бокс",
@@ -668,18 +920,78 @@ window.CATALOG_PROMOS = {
   ],
 };
 
+window.COOKIE_CATALOG_ORDER = [
+  "domashne",
+  "babusyne",
+  "nasoloda",
+  "zabava",
+  "zadavaka",
+  "biskvitka",
+  "dzhaiv",
+  "orbita",
+  "amerikano-drops",
+  "amerikano-rodzynky",
+  "bilochka",
+  "bilochka-glazur",
+  "kvatro-drops",
+  "kvatro-mak",
+  "zavytushka-tsukor",
+  "zavytushka-korytsia",
+  "dzhemka-abrykos",
+  "dzhemka-jabluko",
+  "dzhemka-polunytsia",
+  "dzhemka-vyshnia",
+  "solodka-palychka-zgushchene-moloko",
+  "solodka-palychka-priazhene-moloko",
+  "magiia-arahis",
+  "magiia-kokos",
+  "zavytushka-arahis-zgushchene-moloko",
+  "zavytushka-zgushchene-moloko",
+  "zavytushka-priazhene-moloko",
+  "zavytushka-mak-zgushchene-moloko",
+  "zavytushka-synamon",
+  "zavytushka-shokolad",
+  "zavytushka-jabluko",
+  "malibu-zgushchene-moloko",
+  "malibu-kakao-krem",
+  "malibu-kreme",
+  "malibu-toffi-karamel",
+  "nova-praha-kakao-krem",
+  "nova-praha-fistashka",
+  "nova-praha-toffi-karamel",
+  "nova-praha-kreme",
+  "frutiko-shoko-vyshnia",
+  "frutiko-vyshnia",
+  "frutiko-polunytsia",
+  "frutiko-persyk",
+  "frutiko-abrykos",
+  "duetto-kreme-polunytsia",
+  "duetto-kreme-abrykos",
+  "duetto-dabl-krem",
+];
+
 window.getCatalogProducts = function getCatalogProducts() {
   let idCounter = 1;
+  const cookieOrder = new Map(window.COOKIE_CATALOG_ORDER.map((id, index) => [id, index]));
 
   return window.PRODUCTS_DATA.flatMap((product) =>
     (product.catalogItems || []).map((item) => {
-      const packOptions = item.packOptions?.length > 1
-        ? item.packOptions
-        : window.DEFAULT_PLP_PACK_OPTIONS;
+      const itemPackOptions = item.packOptions || [];
+      const packOptions = itemPackOptions.length > 1
+        ? itemPackOptions
+        : [
+            ...itemPackOptions,
+            ...window.DEFAULT_PLP_PACK_OPTIONS.filter((defaultOption) =>
+              !itemPackOptions.some((itemOption) =>
+                itemOption.label === defaultOption.label && itemOption.price === defaultOption.price
+              )
+            ),
+          ];
       const primaryPack = packOptions[0];
 
       return {
         id: idCounter++,
+        catalogId: item.id,
         name: item.cardTitle,
         sub: item.subcategory || product.category,
         weight: primaryPack.label,
@@ -688,7 +1000,11 @@ window.getCatalogProducts = function getCatalogProducts() {
         packOptions,
       };
     })
-  );
+  ).sort((a, b) => {
+    const aOrder = cookieOrder.has(a.catalogId) ? cookieOrder.get(a.catalogId) : Number.MAX_SAFE_INTEGER;
+    const bOrder = cookieOrder.has(b.catalogId) ? cookieOrder.get(b.catalogId) : Number.MAX_SAFE_INTEGER;
+    return aOrder - bOrder;
+  });
 };
 
 function normalizeFlavorText(value) {
