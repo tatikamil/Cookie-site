@@ -4,6 +4,9 @@ let openSetDropdownId = null;
 const selectedSetPackById = {};
 const setOrder = new Map(sets.map((item, index) => [item.id, index]));
 let activeSort = "default";
+const currentLocation = window.location || globalThis.location || { search: "", hash: "" };
+const urlParams = new URLSearchParams(currentLocation.search || "");
+const requestedFilter = urlParams.get("filter");
 const SORT_OPTIONS = [
   { value: "default", label: "За замовчуванням" },
   { value: "popular", label: "За популярністю" },
@@ -215,7 +218,7 @@ function setCardHTML(item) {
   `;
 
   return `
-    <article class="set-card ${hasPackOptions ? 'set-card--with-dropdown' : 'set-card--without-dropdown'}" data-category="${item.category}">
+    <article class="set-card ${hasPackOptions ? 'set-card--with-dropdown' : 'set-card--without-dropdown'}" data-category="${item.category}" data-set-id="${item.id}">
       <div class="set-card__image-wrap">
         <img class="set-card__image" src="${item.img}" alt="${item.name}">
       </div>
@@ -255,6 +258,23 @@ function renderSets() {
   grid.innerHTML = cards.join("");
 }
 
+function setActivePill(filter) {
+  const target = document.querySelector(`.pill[data-filter="${filter}"]`) || document.querySelector('.pill[data-filter="all"]');
+  document.querySelectorAll(".pill[data-filter]").forEach((item) => item.classList.remove("pill--active"));
+  target?.classList.add("pill--active");
+  activeSetsFilter = target?.dataset.filter || "all";
+}
+
+function scrollToInitialSet() {
+  const rawHash = currentLocation.hash ? decodeURIComponent(currentLocation.hash.slice(1)) : "";
+  if (!rawHash) return;
+
+  const card = document.querySelector(`.set-card[data-set-id="${rawHash}"]`);
+  if (!card) return;
+
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 document.addEventListener("click", () => {
   if (openSetDropdownId !== null) {
     openSetDropdownId = null;
@@ -283,4 +303,6 @@ document.querySelectorAll("[data-sort-value]").forEach((button) => {
 });
 
 updateSortUI();
+setActivePill(requestedFilter || activeSetsFilter);
 renderSets();
+scrollToInitialSet();

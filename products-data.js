@@ -721,7 +721,7 @@ window.PRODUCTS_DATA = [
         cardTitle: "Білочка в глазурі",
         image: "images/bilochka-glazur.png",
         subcategory: "classic",
-        packOptions: [{ label: "L · 900 г", price: 342 }],
+        packOptions: [{ label: "L · 900 г", price: 204 }],
       },
     ],
     boxBuilderItem: {

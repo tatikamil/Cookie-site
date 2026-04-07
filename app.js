@@ -10,7 +10,10 @@ const productOrder = new Map(products.map((product, index) => [String(product.id
 let openPackDropdownId = null;
 let activeSort = "default";
 const enablePromos = document.body.dataset.promos === "true";
-const initialFilter = document.body.dataset.initialFilter || "all";
+const currentLocation = window.location || globalThis.location || { search: "", hash: "" };
+const urlParams = new URLSearchParams(currentLocation.search || "");
+const requestedFilter = urlParams.get("filter");
+const initialFilter = requestedFilter || document.body.dataset.initialFilter || "all";
 const SORT_OPTIONS = [
   { value: "default", label: "За замовчуванням" },
   { value: "popular", label: "За популярністю" },
@@ -206,7 +209,7 @@ function cardHTML(p) {
   }
 
   return `
-    <div class="product-card product-card--with-dropdown" data-sub="${p.sub || ''}">
+    <div class="product-card product-card--with-dropdown" data-sub="${p.sub || ''}" data-catalog-id="${p.catalogId}">
       <div class="product-card__image-wrap">
         <img class="product-card__image" src="${p.img}" alt="${p.name}">
       </div>
@@ -257,6 +260,23 @@ function render(filter) {
   grid.innerHTML = cards.join("");
 }
 
+function setActivePill(filter) {
+  const target = document.querySelector(`.pill[data-filter="${filter}"]`) || document.querySelector('.pill[data-filter="all"]');
+  document.querySelectorAll(".pill[data-filter]").forEach((item) => item.classList.remove("pill--active"));
+  target?.classList.add("pill--active");
+  return target?.dataset.filter || "all";
+}
+
+function scrollToInitialProduct() {
+  const rawHash = currentLocation.hash ? decodeURIComponent(currentLocation.hash.slice(1)) : "";
+  if (!rawHash) return;
+
+  const card = document.querySelector(`.product-card[data-catalog-id="${rawHash}"]`);
+  if (!card) return;
+
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 document.addEventListener("click", () => {
   if (openPackDropdownId !== null) {
     openPackDropdownId = null;
@@ -285,4 +305,5 @@ document.querySelectorAll("[data-sort-value]").forEach((button) => {
 
 // === Init ===
 updateSortUI();
-render(initialFilter);
+render(setActivePill(initialFilter));
+scrollToInitialProduct();

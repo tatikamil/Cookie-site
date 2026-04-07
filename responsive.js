@@ -26,6 +26,64 @@
   });
 })();
 
+// === Home Event Order Modal ===
+(function () {
+  const trigger = document.getElementById('homeEventOrderTrigger');
+  const overlay = document.getElementById('homeEventOrderModal');
+  const closeBtn = document.getElementById('homeEventOrderClose');
+  const doneBtn = document.getElementById('homeEventOrderDone');
+  const form = document.getElementById('homeEventOrderForm');
+  const formContent = overlay?.querySelector('.home-modal__content--form');
+  const successContent = overlay?.querySelector('.home-modal__content--success');
+
+  if (!trigger || !overlay || !closeBtn || !form || !formContent || !successContent) return;
+
+  function openModal() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    form.reset();
+    formContent.hidden = false;
+    successContent.hidden = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  trigger.addEventListener('click', function () {
+    openModal();
+  });
+
+  closeBtn.addEventListener('click', function () {
+    closeModal();
+  });
+
+  doneBtn?.addEventListener('click', function () {
+    closeModal();
+  });
+
+  overlay.addEventListener('click', function (event) {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    formContent.hidden = true;
+    successContent.hidden = false;
+  });
+})();
+
 // === Box Builder Drawer Toggle ===
 (function () {
   const bottomBar = document.getElementById('boxBottomBar');

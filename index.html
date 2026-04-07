@@ -36,7 +36,7 @@
         <a href="#" class="header__nav-link">B2B</a>
       </div>
       <div class="header__icons">
-        <button class="header__icon-btn header__search-btn" aria-label="Пошук">
+        <button class="header__icon-btn header__search-btn" aria-label="Пошук" data-search-trigger>
           <img src="icons/search.svg" width="24" height="24" alt="">
         </button>
         <button class="header__icon-btn header__account-btn" aria-label="Акаунт">
@@ -65,7 +65,7 @@
         </button>
       </div>
       <nav class="mobile-menu__nav">
-        <a href="#" class="mobile-menu__link">
+        <a href="#" class="mobile-menu__link" data-search-trigger>
           <img src="icons/search.svg" width="20" height="20" alt=""> Пошук
         </a>
         <a href="#" class="mobile-menu__link">
@@ -212,7 +212,7 @@
           <img class="home-feature__flower home-feature__flower--side" src="images/flover2.png" alt="">
           <h2 class="home-feature__title home-feature__title--small">Організовуєш захід?</h2>
           <p class="home-feature__text">Допоможемо підібрати ласощі для великої компанії.<br>Тільки скажи.</p>
-          <a href="#" class="home-secondary-btn">Замовити</a>
+          <button type="button" class="home-secondary-btn" id="homeEventOrderTrigger">Замовити</button>
         </div>
         <div class="home-feature__media">
           <img src="images/zahid.png" alt="Організовуєш захід">
@@ -260,6 +260,70 @@
       </div>
     </section>
   </main>
+
+  <div class="home-modal-overlay" id="homeEventOrderModal" aria-hidden="true">
+    <div class="home-modal" role="dialog" aria-modal="true" aria-labelledby="homeEventOrderTitle">
+      <button class="home-modal__close" id="homeEventOrderClose" type="button" aria-label="Закрити">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <line x1="6" y1="6" x2="18" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+          <line x1="18" y1="6" x2="6" y2="18" stroke="#3A332C" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <div class="home-modal__content home-modal__content--form">
+        <div class="home-modal__header">
+          <h2 class="home-modal__title" id="homeEventOrderTitle">Замовлення для заходу</h2>
+          <p class="home-modal__text">Залиш деталі, а ми підберемо найкращі ласощі для твоєї компанії.</p>
+        </div>
+
+        <form class="home-order-form" id="homeEventOrderForm">
+          <div class="home-order-form__row">
+            <label class="home-order-form__field">
+              <span class="home-order-form__label">Кількість людей</span>
+              <input class="home-order-form__input" type="number" min="1" name="people" required>
+            </label>
+
+            <label class="home-order-form__field">
+              <span class="home-order-form__label">Бюджет на одну людину</span>
+              <input class="home-order-form__input" type="number" min="1" step="1" name="budget" required>
+            </label>
+          </div>
+
+          <label class="home-order-form__field">
+            <span class="home-order-form__label">E-mail</span>
+            <input class="home-order-form__input" type="email" name="email" placeholder="example@email.com" required>
+          </label>
+
+          <label class="home-order-form__checkbox">
+            <input class="home-order-form__checkbox-input" type="checkbox" name="tea">
+            <span class="home-order-form__checkbox-box"></span>
+            <span class="home-order-form__checkbox-copy">
+              <span class="home-order-form__label">Додати чай</span>
+            </span>
+          </label>
+
+          <label class="home-order-form__field">
+            <span class="home-order-form__label">Особливі побажання</span>
+            <textarea class="home-order-form__textarea" name="notes" rows="4" placeholder="Напиши, якщо хочеш певні смаки, пакування або побажання до замовлення"></textarea>
+          </label>
+
+          <button class="home-order-form__submit" type="submit">Надіслати</button>
+        </form>
+      </div>
+
+      <div class="home-modal__content home-modal__content--success" hidden>
+        <div class="home-modal__success-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="#159642"/>
+            <path d="M15 24.5L21 30L33 18" stroke="#FEFAEF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="home-modal__title">Дякуємо, ми зв’яжемось</h2>
+        <p class="home-modal__text">Отримали твоє замовлення і вже готуємо підбірку ласощів для заходу.</p>
+        <button class="home-order-form__submit" id="homeEventOrderDone" type="button">Гаразд</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="home-footer">
     <div class="home-footer__inner">
@@ -329,6 +393,8 @@
     </div>
   </footer>
 
+  <script src="products-data.js"></script>
   <script src="responsive.js"></script>
+  <script src="search.js"></script>
 </body>
 </html>
