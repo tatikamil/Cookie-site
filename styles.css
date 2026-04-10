@@ -210,6 +210,27 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   z-index: 20;
 }
 
+.header-search-inline--menu {
+  flex: none;
+  max-width: none;
+  width: 100%;
+}
+
+.header-search-inline--menu .header-search-inline__dropdown {
+  position: static;
+  width: 100%;
+  max-height: min(44vh, 420px);
+  margin-top: 12px;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.header-search-inline--menu .site-search__field {
+  height: 48px;
+  padding: 0 12px;
+  border-radius: 16px;
+}
+
 /* === Main === */
 .main {
   max-width: 1920px;

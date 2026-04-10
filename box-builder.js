@@ -8,9 +8,41 @@ const products = window.getBoxBuilderProducts();
 
 // === Active category filter ===
 let activeCategory = "sandwich";
+let activeBoxMode = "three-small";
+let activeThreeSmallFillMode = "same";
 
 function getFilteredProducts() {
   return products.filter(p => p.category === activeCategory);
+}
+
+function updateBoxModeUI() {
+  document.querySelectorAll("[data-box-mode]").forEach((button) => {
+    const isActive = button.dataset.boxMode === activeBoxMode;
+    button.classList.toggle("box-mode-switcher__option--active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function setBoxMode(mode) {
+  if (!mode || mode === activeBoxMode) return;
+  activeBoxMode = mode;
+  updateBoxModeUI();
+  render();
+}
+
+function updateThreeSmallFillModeUI() {
+  document.querySelectorAll("[data-box-fill-mode]").forEach((button) => {
+    const isActive = button.dataset.boxFillMode === activeThreeSmallFillMode;
+    button.classList.toggle("box-fill-mode__pill--active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function setThreeSmallFillMode(mode) {
+  if (!mode || mode === activeThreeSmallFillMode) return;
+  activeThreeSmallFillMode = mode;
+  updateThreeSmallFillModeUI();
+  render();
 }
 
 // === Box key helpers ===
@@ -61,6 +93,13 @@ function canAddItem(key) {
   return getRemainingUnits() >= data.units;
 }
 
+function getMaxQtyForKey(key) {
+  const currentQty = box[key] || 0;
+  const data = getItemData(key);
+  const availableUnits = getRemainingUnits() + currentQty * data.units;
+  return Math.max(0, Math.floor(availableUnits / data.units));
+}
+
 function getBoxStats() {
   const keys = Object.keys(box).filter(k => box[k] > 0);
   const totalProducts = keys.length;
@@ -79,8 +118,7 @@ const ICON_MINUS = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 const ICON_PLUS = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="3" y1="8" x2="13" y2="8" stroke="#00A439" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="3" x2="8" y2="13" stroke="#00A439" stroke-width="2" stroke-linecap="round"/></svg>`;
 const ICON_CLOSE = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="4" x2="12" y2="12" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="4" x2="4" y2="12" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/></svg>`;
 
-// === Box map grid HTML ===
-function boxMapHTML() {
+function singleBoxMapHTML() {
   const totalUnits = getTotalUnits();
   const fullCells = Math.floor(totalUnits / UNITS_PER_CELL);
   const partialUnits = totalUnits % UNITS_PER_CELL;
@@ -108,17 +146,146 @@ function boxMapHTML() {
       cells += `<div class="box-map__cell"></div>`;
     }
   }
+  return `<div class="box-map__grid">${cells}</div>`;
+}
+
+function threeSmallBoxMapHTML() {
+  const totalUnits = getTotalUnits();
+  const fullCells = Math.floor(totalUnits / UNITS_PER_CELL);
+  const partialUnits = totalUnits % UNITS_PER_CELL;
+  const full360 = totalUnits >= BOX_CAPACITY;
+  const SMALL_BOXES = 3;
+  const CELLS_PER_SMALL_BOX = 12;
+
+  let globalCellIndex = 0;
+
+  const boxesHtml = Array.from({ length: SMALL_BOXES }, () => {
+    let cells = "";
+
+    for (let i = 0; i < CELLS_PER_SMALL_BOX; i += 1) {
+      if (globalCellIndex < fullCells) {
+        if (full360) {
+          cells += `<div class="box-map__cell box-map__cell--full"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
+        } else {
+          cells += `<div class="box-map__cell box-map__cell--filled"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
+        }
+      } else if (globalCellIndex === fullCells && partialUnits > 0) {
+        const fillPct = Math.round((partialUnits / UNITS_PER_CELL) * 100);
+        if (full360) {
+          cells += `<div class="box-map__cell box-map__cell--full box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
+        } else {
+          cells += `<div class="box-map__cell box-map__cell--filled box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
+        }
+      } else {
+        cells += `<div class="box-map__cell"></div>`;
+      }
+
+      globalCellIndex += 1;
+    }
+
+    return `
+      <div class="box-map__small-box">
+        <div class="box-map__small-box-grid">${cells}</div>
+      </div>
+    `;
+  }).join("");
+
+  return `<div class="box-map__boxes">${boxesHtml}</div>`;
+}
+
+function threeSmallSameBoxMapHTML() {
+  const totalUnits = getTotalUnits();
+  const fullCells = Math.floor(totalUnits / UNITS_PER_CELL);
+  const partialUnits = totalUnits % UNITS_PER_CELL;
+  const full360 = totalUnits >= BOX_CAPACITY;
+  const SMALL_BOXES = 3;
+  const CELLS_PER_SMALL_BOX = 12;
+
+  const fullCellsPerBox = Array.from({ length: SMALL_BOXES }, (_, boxIndex) => {
+    const base = Math.floor(fullCells / SMALL_BOXES);
+    const remainder = fullCells % SMALL_BOXES;
+    return base + (boxIndex < remainder ? 1 : 0);
+  });
+
+  const partialBoxIndex = partialUnits > 0 ? fullCells % SMALL_BOXES : -1;
+  const partialCellIndex = partialUnits > 0 ? Math.floor(fullCells / SMALL_BOXES) : -1;
+
+  const boxesHtml = Array.from({ length: SMALL_BOXES }, (_, boxIndex) => {
+    let cells = "";
+
+    for (let cellIndex = 0; cellIndex < CELLS_PER_SMALL_BOX; cellIndex += 1) {
+      if (cellIndex < fullCellsPerBox[boxIndex]) {
+        if (full360) {
+          cells += `<div class="box-map__cell box-map__cell--full"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
+        } else {
+          cells += `<div class="box-map__cell box-map__cell--filled"><div class="box-map__cell-inner" style="height:100%;"></div></div>`;
+        }
+      } else if (boxIndex === partialBoxIndex && cellIndex === partialCellIndex) {
+        const fillPct = Math.round((partialUnits / UNITS_PER_CELL) * 100);
+        if (full360) {
+          cells += `<div class="box-map__cell box-map__cell--full box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
+        } else {
+          cells += `<div class="box-map__cell box-map__cell--filled box-map__cell--partial"><div class="box-map__cell-inner" style="height:${fillPct}%;"></div></div>`;
+        }
+      } else {
+        cells += `<div class="box-map__cell"></div>`;
+      }
+    }
+
+    return `
+      <div class="box-map__small-box">
+        <div class="box-map__small-box-grid">${cells}</div>
+      </div>
+    `;
+  }).join("");
+
+  return `<div class="box-map__boxes">${boxesHtml}</div>`;
+}
+
+// === Box map grid HTML ===
+function boxMapHTML() {
+  return `
+    <div class="box-map box-map--${activeBoxMode}">
+      <div class="box-map__title">Заповнення коробки:</div>
+      ${activeBoxMode === "three-small"
+        ? (activeThreeSmallFillMode === "same" ? threeSmallSameBoxMapHTML() : threeSmallBoxMapHTML())
+        : singleBoxMapHTML()}
+    </div>`;
+}
+
+function boxModeSwitcherHTML(extraClass = "") {
+  const className = extraClass ? ` ${extraClass}` : "";
+  const isLarge = activeBoxMode === "large";
+  const isThreeSmall = activeBoxMode === "three-small";
 
   return `
-    <div class="box-map">
-      <div class="box-map__title">Заповнення коробки:</div>
-      <div class="box-map__grid">${cells}</div>
+    <div class="box-mode-switcher-wrap${className}" aria-label="Режим боксу">
+      <div class="box-mode-switcher" role="group" aria-label="Вибір розміру боксу">
+        <button type="button" class="box-mode-switcher__option${isLarge ? " box-mode-switcher__option--active" : ""}" data-box-mode="large" aria-pressed="${isLarge}">ВЕЛИКИЙ</button>
+        <button type="button" class="box-mode-switcher__option${isThreeSmall ? " box-mode-switcher__option--active" : ""}" data-box-mode="three-small" aria-pressed="${isThreeSmall}">ТРИ МАЛЕНЬКИХ</button>
+      </div>
+    </div>`;
+}
+
+function threeSmallFillModeHTML() {
+  if (activeBoxMode !== "three-small") return "";
+  const isSame = activeThreeSmallFillMode === "same";
+  const isDifferent = activeThreeSmallFillMode === "different";
+
+  return `
+    <div class="box-fill-mode" role="group" aria-label="Схема наповнення боксів">
+      <button type="button" class="box-fill-mode__pill${isSame ? " box-fill-mode__pill--active" : ""}" data-box-fill-mode="same" aria-pressed="${isSame}">Однакові</button>
+      <button type="button" class="box-fill-mode__pill${isDifferent ? " box-fill-mode__pill--active" : ""}" data-box-fill-mode="different" aria-pressed="${isDifferent}">Всі різні</button>
     </div>`;
 }
 
 // === Mini box map (9 segments for bottom bar) ===
 const MINI_SEGMENTS = 9;
 const UNITS_PER_SEGMENT = BOX_CAPACITY / MINI_SEGMENTS; // 40
+
+function getBoxTitle() {
+  return activeBoxMode === "three-small" ? "Ваші бокси" : "Ваш бокс";
+}
 
 function updateMiniBoxMap() {
   const container = document.getElementById('boxMiniMap');
@@ -197,7 +364,19 @@ function cardHTML(p) {
     const plusOnclick = canIncrement ? `onclick="updateQty('${key}', 1)"` : '';
     bottomSection = `<div class="product-card__counter">
         <button class="product-card__counter-btn" onclick="updateQty('${key}', -1)">${ICON_MINUS}</button>
-        <span class="product-card__counter-value">${qty}</span>
+        <input
+          class="product-card__counter-value"
+          type="number"
+          min="1"
+          max="${getMaxQtyForKey(key)}"
+          step="1"
+          inputmode="numeric"
+          value="${qty}"
+          aria-label="Кількість ${p.name}"
+          onkeydown="handleQtyInputKeydown(event, '${key}')"
+          onblur="setQty('${key}', this.value)"
+          onchange="setQty('${key}', this.value)"
+        >
         <button class="product-card__counter-btn${plusDisabled}" ${plusOnclick}>${ICON_PLUS}</button>
       </div>`;
   } else if (!canAdd) {
@@ -243,7 +422,19 @@ function sidebarItemHTML(key) {
       <div class="box-sidebar__item-actions">
         <div class="box-sidebar__qty-control">
           <button class="box-sidebar__qty-btn" onclick="updateQty('${key}', -1)" aria-label="Зменшити кількість">${ICON_MINUS}</button>
-          <span class="box-sidebar__qty-value">${qty}</span>
+          <input
+            class="box-sidebar__qty-value"
+            type="number"
+            min="1"
+            max="${getMaxQtyForKey(key)}"
+            step="1"
+            inputmode="numeric"
+            value="${qty}"
+            aria-label="Кількість ${displayName}"
+            onkeydown="handleQtyInputKeydown(event, '${key}')"
+            onblur="setQty('${key}', this.value)"
+            onchange="setQty('${key}', this.value)"
+          >
           <button class="box-sidebar__qty-btn${plusDisabled}" ${plusOnclick} aria-label="Збільшити кількість">${ICON_PLUS}</button>
         </div>
         <button class="box-sidebar__item-remove" onclick="removeFromBox('${key}')" aria-label="Видалити позицію">${ICON_CLOSE}</button>
@@ -327,8 +518,9 @@ function render() {
   }
 
   // Title
-  const titleSection = `<h2 class="box-sidebar__title">Ваш бокс</h2>`;
+  const titleSection = `${boxModeSwitcherHTML("box-sidebar__mode-switcher")}<div class="box-sidebar__title-group"><h2 class="box-sidebar__title">${getBoxTitle()}</h2>${threeSmallFillModeHTML()}</div>`;
 
+  sidebar.classList.toggle("box-sidebar--three-small", activeBoxMode === "three-small");
   sidebar.innerHTML = titleSection + mapSection + statsSection + itemsSection + helperSection + postcardSection + totalSection + ctaSection;
 
   // === Update mobile drawer content (if present) ===
@@ -337,7 +529,7 @@ function render() {
     const drawerTextarea = drawerContent.querySelector('.box-sidebar__postcard-text');
     const drawerPostcardText = drawerTextarea ? drawerTextarea.value : postcardText;
 
-    drawerContent.innerHTML = mapSection + statsSection + itemsSection + helperSection + postcardSection + totalSection + ctaSection;
+    drawerContent.innerHTML = threeSmallFillModeHTML() + mapSection + statsSection + itemsSection + helperSection + postcardSection + totalSection + ctaSection;
 
     const newDrawerTextarea = drawerContent.querySelector('.box-sidebar__postcard-text');
     if (newDrawerTextarea) {
@@ -349,6 +541,16 @@ function render() {
   const bottomBarSummary = document.getElementById('bottomBarSummary');
   if (bottomBarSummary) {
     bottomBarSummary.textContent = `${stats.totalPieces} шт \u00b7 ${stats.totalPrice} грн`;
+  }
+
+  const bottomBarLabel = document.querySelector('.box-bottom-bar__label');
+  if (bottomBarLabel) {
+    bottomBarLabel.textContent = getBoxTitle();
+  }
+
+  const drawerTitle = document.querySelector('.box-drawer__title');
+  if (drawerTitle) {
+    drawerTitle.textContent = getBoxTitle();
   }
 
   // === Update mini box map on bottom bar ===
@@ -382,6 +584,48 @@ function updateQty(key, delta) {
   render();
 }
 
+function setQty(key, rawValue) {
+  const normalizedValue = String(rawValue || "").trim();
+  if (!normalizedValue) {
+    render();
+    return;
+  }
+
+  const parsedValue = Number.parseInt(normalizedValue, 10);
+  if (!Number.isFinite(parsedValue)) {
+    render();
+    return;
+  }
+
+  if (parsedValue <= 0) {
+    removeFromBox(key);
+    return;
+  }
+
+  const clampedValue = Math.min(parsedValue, getMaxQtyForKey(key));
+  if (clampedValue <= 0) {
+    removeFromBox(key);
+    return;
+  }
+
+  box[key] = clampedValue;
+  render();
+}
+
+function handleQtyInputKeydown(event, key) {
+  const enterLikeKeys = ["Enter", "Done", "Go", "Search", "Send"];
+  if (enterLikeKeys.includes(event.key) || event.code === "Enter" || event.code === "NumpadEnter" || event.keyCode === 13) {
+    event.preventDefault();
+    setQty(key, event.target.value);
+    return;
+  }
+
+  if (event.key === "Escape") {
+    event.preventDefault();
+    render();
+  }
+}
+
 // === Pill filtering ===
 document.querySelectorAll(".pill").forEach(pill => {
   pill.addEventListener("click", () => {
@@ -394,4 +638,18 @@ document.querySelectorAll(".pill").forEach(pill => {
 });
 
 // === Init ===
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-box-mode]");
+  if (button) {
+    setBoxMode(button.dataset.boxMode);
+    return;
+  }
+
+  const fillModeButton = event.target.closest("[data-box-fill-mode]");
+  if (!fillModeButton) return;
+  setThreeSmallFillMode(fillModeButton.dataset.boxFillMode);
+});
+
+updateBoxModeUI();
+updateThreeSmallFillModeUI();
 render();
