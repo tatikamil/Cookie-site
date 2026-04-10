@@ -1772,6 +1772,12 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   .set-card {
     height: 220px;
   }
+
+  .set-card__control {
+    min-height: auto;
+    height: auto;
+    padding: 4px 8px;
+  }
 }
 
 /* =============================================
@@ -2013,7 +2019,8 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   }
 
   .set-card__control {
-    min-height: 48px;
+    min-height: auto;
+    height: auto;
     border-radius: 8px;
     padding: 4px 8px;
   }
